@@ -1,258 +1,135 @@
-# Root Cause Analysis: Metricbeat Installation Failure on cs01-nwkr-01
+# Root Cause Analysis: Metricbeat Installation on cs01-nwkr-01
 
 ## Executive Summary
 
-The metricbeat installation failure on Windows host **cs01-nwkr-01** during the first AWS CodeBuild execution was caused by a **CredSSP TLS Handshake failure** at the Ansible task "Test connection" stage. This authentication-layer failure prevented any metricbeat-related tasks from executing. **Metricbeat was never installed, removed, or reinstalled on this host.**
+Two distinct failures occurred across the first and second AWS CodeBuild attempts targeting Windows host cs01-nwkr-01:
+
+- Attempt 1 (first_try.log): WinRM authentication failed at the CredSSP TLS handshake during the "Test connection" task. No metricbeat tasks executed.
+- Attempt 2 (nwkr.log): WinRM transport was NTLM (not CredSSP). Connection succeeded, but the metricbeat download via HTTPS failed with "Could not create SSL/TLS secure channel". Metricbeat did not install.
+
+Outcome: Metricbeat was never installed on cs01-nwkr-01. The first failure was at the authentication layer (CredSSP TLS handshake). The second failure was at the application layer (HTTPS/TLS download) while using NTLM transport.
 
 ---
 
-## Problem Statement
+## Context and Problem Statement
 
-Windows host cs01-nwkr-01 failed to complete metricbeat installation during CodeBuild execution. The failure pattern raised the hypothesis: "Was metricbeat installed, then removed and reinstallation attempted?"
+The host cs01-nwkr-01 was targeted for metricbeat deployment. A hypothesis emerged that metricbeat may have been installed, removed, and then reinstalled. Analysis shows this did not happen:
 
-This analysis definitively answers: **No** - metricbeat was never installed due to early authentication failure.
-
----
-
-## Root Cause: CredSSP TLS Handshake Failure
-
-### Technical Details
-
-**Error Message:**
-```
-Server did not respond with a CredSSP token after step TLS Handshake
-```
-
-**Failure Location:**
-- Ansible task: "Test connection" (3rd task in playbook execution)
-- Stage: Initial WinRM authentication via CredSSP protocol
-- Impact: Complete host access prevention before metricbeat tasks could execute
-
-### Why CredSSP Matters
-
-CredSSP (Credential Security Support Provider) is the Windows authentication protocol that Ansible uses to:
-1. Establish secure connection to Windows hosts
-2. Negotiate credentials (Kerberos/NTLM)
-3. Execute remote commands via WinRM
-
-**The failure occurred at the TLS handshake phase**, which means:
-- The CodeBuild instance could not establish a secure tunnel to the Windows host
-- No authentication credentials were exchanged
-- WinRM remote execution was impossible
-- All subsequent tasks were automatically skipped
-
-### TLS 1.2+ Requirement
-
-CredSSP strict enforcement requires:
-- **Minimum TLS version: 1.2**
-- TLS 1.0 and 1.1 are rejected
-- Older protocol versions cannot negotiate CredSSP tokens
-
-If the CodeBuild environment or Windows host was using outdated TLS versions, the handshake would fail at the protocol layer before any authentication could occur.
+- In Attempt 1, tasks never progressed past the connection test.
+- In Attempt 2, tasks progressed but failed on the HTTPS download step; installation never completed.
 
 ---
 
-## Evidence: Ansible Task Execution Log
+## Attempt 1: CredSSP TLS Handshake Failure (Authentication Layer)
 
-### PLAY RECAP (First Attempt - cs01-nwkr-01)
+### Evidence
+- Error: "Server did not respond with a CredSSP token after step TLS Handshake".
+- Failure location: Ansible task "Test connection" (early in play).
+- PLAY RECAP shows failure during connection; metricbeat tasks not reached.
 
-```
-cs01-nwkr-01: ok=1 changed=0 unreachable=0 failed=1 skipped=1
-```
+### Interpretation
+CredSSP requires a successful TLS handshake before credential exchange; the handshake did not complete. This blocked WinRM authentication entirely, causing all subsequent tasks to be skipped for this host.
 
-### Task Execution Timeline
-
-| Task # | Task Name | Status | Notes |
-|--------|-----------|--------|-------|
-| 1 | Gather Facts | ✅ OK | Localhost task (pre-connection) |
-| 2 | Include Vars | ✅ OK | Localhost task (pre-connection) |
-| 3 | **Test connection** | ❌ FAILED | CredSSP TLS Handshake failure - WinRM authentication blocked |
-| 4+ | All metricbeat tasks (install, config, verify) | ⏭️ SKIPPED | Never reached due to failed connection test |
-
-### Key Indicators
-
-- **ok=1**: Only localhost pre-connection tasks completed
-- **failed=1**: Connection test failure at task #3
-- **skipped=1**: At least one task (connection retry?) was skipped
-- **unreachable=0**: Host was reachable at network level, but not via WinRM protocol
-
-The skipped count being exactly 1 suggests Ansible attempted one retry before marking host as unable to execute tasks.
+### Likely Contributors
+- TLS version mismatch (TLS 1.0/1.1 vs required TLS 1.2+).
+- Host policy or Schannel configuration preventing handshake.
+- Certificate trust or negotiation issues at transport layer.
 
 ---
 
-## Comparative Analysis: First vs. Second Build Attempt
+## Attempt 2: NTLM Transport OK, HTTPS TLS Failure (Application Layer)
 
-### First Build Attempt (first_try.log)
+### Evidence
+- Transport: `ansible_winrm_transport: ntlm` in nwkr.log (explicit NTLM usage).
+- Connection test: OK; subsequent tasks executed.
+- Download step (e.g., `win_get_url`) failed with: "The request was aborted: Could not create SSL/TLS secure channel".
 
-**Failure Stage:** Authentication Layer
-- **Error**: CredSSP TLS Handshake failure
-- **Task Failed**: Test connection (#3)
-- **Why**: Protocol/credential negotiation failed before reaching metricbeat tasks
-- **Metricbeat Status**: Never touched (never installed, no removal possible)
+### Interpretation
+WinRM connectivity and authentication succeeded under NTLM. The failure occurred when downloading the metricbeat artifact over HTTPS, indicating host-side Schannel/TLS or certificate trust issues unrelated to WinRM transport.
 
-### Second Build Attempt (nwkr.log)
-
-**Failure Stage:** Application Layer (Download)
-- **Error**: TLS 1.2 not supported during metricbeat binary download
-- **Task Failed**: Install metricbeat
-- **Why**: Host was reachable, but HTTPS download of metricbeat binary failed
-- **Metricbeat Status**: Removal task executed, reinstallation failed
-
-### Critical Difference
-
-| Aspect | First Attempt | Second Attempt |
-|--------|---------------|-----------------|
-| **WinRM Connection** | ❌ Failed | ✅ Succeeded |
-| **CredSSP Handshake** | ❌ Failed at TLS negotiation | ✅ Succeeded |
-| **Tasks Executed** | 2 (pre-connection only) | ~80% of playbook |
-| **Metricbeat Install Task** | ⏭️ Never reached | ✅ Reached, ❌ Failed |
-| **Metricbeat Removal Task** | ⏭️ Never reached | ✅ Executed |
-| **Root Cause** | Authentication protocol | HTTPS protocol |
+### What Did and Did Not Happen
+- Did: Connection succeeded; some tasks ran; a removal step may have executed as part of idempotent role logic.
+- Did not: Successful HTTPS download; installation; service setup. Net effect: Metricbeat remains absent.
 
 ---
 
-## Task Execution Halt Point
+## Layered View of Failures
 
-### What Did NOT Happen
+- Attempt 1: Transport/authentication layer failure (CredSSP TLS handshake).
+- Attempt 2: Application/data transfer layer failure (HTTPS over Schannel TLS), while WinRM used NTLM successfully.
 
-❌ Metricbeat installation was never attempted  
-❌ Metricbeat was never installed  
-❌ Metricbeat removal was never executed  
-❌ Reinstallation was never attempted  
-
-### What Actually Happened
-
-✅ CodeBuild instance started  
-✅ Ansible playbook began  
-✅ Pre-connection tasks completed (Facts, Variables)  
-✅ Connection test initiated  
-❌ CredSSP TLS handshake failed  
-⏭️ All remaining tasks skipped  
+This distinction clarifies why Attempt 1 never reached install tasks, while Attempt 2 reached them but failed at artifact retrieval.
 
 ---
 
-## Root Cause Categories
+## Comparative Summary
 
-### Primary Root Cause (Definite)
-**CredSSP TLS Handshake Failure** - Protocol/Encryption layer issue preventing WinRM authentication
-
-### Secondary Contributing Factors (Likely)
-1. **TLS Version Mismatch**: CodeBuild or Windows host not configured for TLS 1.2+
-2. **CredSSP Policy**: Windows host security policies may require specific CredSSP authentication parameters
-3. **Network Security**: Windows Defender Firewall or network ACLs blocking specific TLS versions
-4. **Certificate Validation**: Expired or untrusted certificates preventing TLS handshake completion
-
-### Why Second Attempt Reached Metricbeat Tasks
-The second CodeBuild execution apparently:
-- Used updated configuration (possibly TLS 1.2+ enabled)
-- Successfully negotiated CredSSP handshake
-- Reached the "Install metricbeat" task
-- Failed only at HTTPS binary download phase
-
-This suggests the fix between attempts was likely **TLS 1.2 enablement or configuration change**.
+| Aspect | Attempt 1 | Attempt 2 |
+|--------|-----------|-----------|
+| WinRM transport | CredSSP (attempted) | NTLM (explicit) |
+| TLS handshake | Fails (no CredSSP token) | Succeeds for WinRM |
+| Connection test | Failed | Passed |
+| Install tasks | Not reached | Reached, download failed |
+| Failure root | Auth/TLS handshake | HTTPS/TLS (Schannel) |
+| Metricbeat result | Not installed | Not installed |
 
 ---
 
-## Impact Assessment
+## Remediation Checklist (Attempt 2 focus)
 
-### cs01-nwkr-01 Status
-- **Metricbeat Installed**: ❌ No
-- **Metricbeat Removed**: ❌ No
-- **Host Accessible via WinRM**: ❌ No (blocked by CredSSP)
-- **Network Connectivity**: ✅ Yes (pre-connection tasks ran)
-- **Service Status**: Unknown (connection blocked before verification)
+- Windows Schannel/TLS:
+  - Ensure TLS 1.2 is enabled system-wide.
+  - Enable .NET strong crypto: `HKLM\SOFTWARE\Microsoft\.NETFramework\v4.0.30319` → `SchUseStrongCrypto=1`.
+  - For WOW6432Node if applicable: `HKLM\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319` → `SchUseStrongCrypto=1`.
+  - Confirm cipher suites include modern options compatible with server endpoint.
 
-### Deployment Gaps
-If metricbeat deployment requires all Windows hosts to have monitoring enabled:
-- cs01-nwkr-01 lacks metricbeat monitoring
-- No metrics collection for this infrastructure node
-- Monitoring blind spot for this specific host
+- Certificate trust:
+  - Install/update root and intermediate CAs required by the artifact host (e.g., Artifactory).
+  - Validate the endpoint certificate chain on the host using `certutil -verify` or manual inspection.
 
----
+- Endpoint validation:
+  - From cs01-nwkr-01, run PowerShell: `Invoke-WebRequest https://<artifact-url> -UseBasicParsing`.
+  - If this fails with secure channel errors, the issue is host-side TLS/Schannel or trust.
 
-## Recommendations
-
-### Immediate Actions
-
-1. **Verify TLS Configuration**
-   - Confirm CodeBuild environment supports TLS 1.2+
-   - Verify Windows host TLS policies allow TLS 1.2+
-   - Check Windows Defender Firewall for TLS protocol blocking
-
-2. **Validate CredSSP Settings**
-   - Review Windows host CredSSP policy settings
-   - Check for required authentication protocols (Kerberos vs. NTLM)
-   - Validate certificate chains for WinRM connections
-
-3. **Test Connectivity**
-   - Run Ansible connection test in isolation
-   - Enable verbose WinRM logging on Windows host
-   - Capture detailed CredSSP handshake traces
-
-### Long-term Improvements
-
-1. **CodeBuild Environment**
-   - Document minimum TLS version requirements
-   - Implement TLS 1.2+ enforcement in build specs
-   - Add pre-flight connectivity checks
-
-2. **Ansible Playbook**
-   - Add verbose connection diagnostics
-   - Implement TLS version detection task
-   - Create fallback authentication methods
-
-3. **Windows Host Configuration**
-   - Standardize TLS policies across all hosts
-   - Document CredSSP requirements
-   - Implement certificate management automation
+- Ansible considerations:
+  - Keep `ansible_winrm_transport: ntlm` if CredSSP is not required.
+  - If CredSSP is needed in future, ensure host supports it (TLS 1.2+, CredSSP policies) and set `ansible_winrm_transport: credssp` accordingly.
 
 ---
 
-## Resolution Verification
+## Optional Remediation (Attempt 1, if CredSSP desired)
 
-After implementing fixes:
-
-1. **Rerun CodeBuild** on cs01-nwkr-01
-2. **Verify PLAY RECAP shows**:
-   - ✅ Connection test: ok
-   - ✅ Metricbeat install: changed (or ok if idempotent)
-   - ✅ Metricbeat verify: ok
-   - ✅ No failed tasks
-3. **Validate metricbeat service**:
-   - Windows Service "metricbeat" should be running
-   - Metrics flowing to Elasticsearch
+- Verify WinRM listener over HTTPS is configured properly (if using 5986).
+- Enforce TLS 1.2 in system TLS settings and policies.
+- Confirm CredSSP is enabled and not restricted by local/security policies.
+- Test with Ansible using `credssp` transport after enabling prerequisites.
 
 ---
 
-## Appendix: CredSSP Protocol Flow (Simplified)
+## Verification Steps
 
-```
-CodeBuild Instance          →→→          Windows Host (cs01-nwkr-01)
-                                        ↓
-1. Initiate WinRM connection          [WinRM listening on :5985/:5986]
-   ↓
-2. Negotiate TLS tunnel               [Checking TLS version support]
-   ↓                                    ❌ TLS 1.0/1.1? → Handshake fails
-3. ❌ FAILURE: TLS 1.0/1.1             [No CredSSP token generated]
-   
-   (If TLS 1.2+ supported)
-   ↓
-2a. TLS 1.2+ tunnel established       ✅ TLS 1.2 handshake succeeds
-    ↓
-3a. Negotiate CredSSP token           [Kerberos/NTLM negotiation]
-    ↓
-4a. Exchange credentials              ✅ Authentication succeeds
-    ↓
-5a. Execute WinRM commands            ✅ Remote execution enabled
-```
+1. Fix Schannel/TLS and certificate trust on cs01-nwkr-01.
+2. Validate HTTPS download locally with PowerShell (`Invoke-WebRequest`).
+3. Rerun Ansible playbook:
+   - Connection: `ok` under NTLM.
+   - Download: `changed` (artifact retrieved).
+   - Install + service: `changed`/`ok`.
+4. Confirm `metricbeat` Windows service is installed and running; metrics flow to Elasticsearch.
 
 ---
 
-## Document Information
+## Conclusion
 
-- **Analysis Date**: January 26, 2026
-- **Issue Host**: cs01-nwkr-01 (Windows)
-- **Service**: Metricbeat (Elastic Monitoring)
-- **Root Cause**: CredSSP TLS Handshake Failure
-- **Status**: Investigation Complete
-- **Confidence Level**: Very High (Evidence from PLAY RECAP and error logs)
+- Attempt 1 failed at CredSSP TLS handshake (authentication); no install occurred.
+- Attempt 2 used NTLM successfully; failed at HTTPS TLS (Schannel) during download; install did not occur.
+- Addressing host-side TLS 1.2/strong crypto and certificate trust should resolve the download barrier and enable installation.
+
+---
+
+## Document Info
+
+- Date: January 26, 2026
+- Host: cs01-nwkr-01 (Windows)
+- Service: Metricbeat
+- Sources: first_try.log (CredSSP handshake failure), nwkr.log (NTLM + HTTPS TLS failure)
+- Status: Updated with corrected transport distinction and remediation guidance.
