@@ -1,0 +1,9 @@
+PS C:\Users\oolajide-a> 'SSL 2.0','SSL 3.0','TLS 1.0','TLS 1.1','TLS 1.2' | ForEach-Object { $p=$_; 'Client','Server' |
+ForEach-Object { Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\$p\
+$_" -ErrorAction SilentlyContinue | Select-Object @{n='Protocol';e={$p}}, @{n='Type';e={$_}}, Enabled, DisabledByDefault
+ }}
+
+Protocol                      Type                          Enabled                                   DisabledByDefault
+--------                      ----                          -------                                   -----------------
+SSL 2.0                       @{DisabledByDefault=1; PSP...                                                           1
+
