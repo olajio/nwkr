@@ -13,3 +13,18 @@ SSL 2.0                       @{DisabledByDefault=1; PSP...                     
 [Net.ServicePointManager]::SecurityProtocol
 Ssl3, Tls
 
+
+---
+---
+PS C:\Users\oolajide-a> Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Na
+me Version -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -match '^(?!S)\p{L}'} | Select-Object PSChildNa
+me, Version
+
+PSChildName                                                 Version
+-----------                                                 -------
+Client                                                      4.6.01055
+Full                                                        4.6.01055
+Client                                                      4.0.0.0
+
+
+
