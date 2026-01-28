@@ -105,3 +105,44 @@ Set-ItemProperty -Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v2.0.
 You should now see `Tls, Tls11, Tls12` or just `Tls12`.
 
 This should resolve the CredSSP handshake failures on es03-nwkrs-01 and es01-nwkr-01.
+
+----
+----
+---
+Determine the version of .NET Framework
+---
+Run this one-liner in PowerShell:
+
+```powershell
+Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release, Version | Select-Object Version, Release
+```
+
+## Interpreting the Release Number
+
+| Release Value | .NET Framework Version |
+|---------------|------------------------|
+| 378389 | 4.5 |
+| 378675 | 4.5.1 (Win 8.1/Server 2012 R2) |
+| 378758 | 4.5.1 |
+| 379893 | 4.5.2 |
+| 393295 | 4.6 (Win 10) |
+| 393297 | 4.6 |
+| 394254 | 4.6.1 (Win 10 Nov Update) |
+| 394271 | 4.6.1 |
+| 394802 | 4.6.2 (Win 10 Anniversary) |
+| 394806 | 4.6.2 |
+| 460798 | 4.7 (Win 10 Creators) |
+| 460805 | 4.7 |
+| 461308 | 4.7.1 (Win 10 Fall Creators) |
+| 461310 | 4.7.1 |
+| 461808 | 4.7.2 (Win 10 April 2018) |
+| 461814 | 4.7.2 |
+| 528040 | 4.8 (Win 10 May 2019) |
+| 528049 | 4.8 |
+| 533320+ | 4.8.1 |
+
+**To check all installed .NET versions (including older 2.x/3.x):**
+
+```powershell
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -match '^(?!S)\p{L}'} | Select-Object PSChildName, Version
+```
