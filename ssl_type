@@ -7,3 +7,9 @@ Protocol                      Type                          Enabled             
 --------                      ----                          -------                                   -----------------
 SSL 2.0                       @{DisabledByDefault=1; PSP...                                                           1
 
+
+
+
+[Net.ServicePointManager]::SecurityProtocol
+Ssl3, Tls
+
