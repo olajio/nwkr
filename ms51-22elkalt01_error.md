@@ -1,0 +1,61 @@
+[oolajide-a@ms51-22elkalt01 ~]$ sudo su
+[root@ms51-22elkalt01 oolajide-a]# dnf install python2-dnf
+bash: dnf: command not found
+[root@ms51-22elkalt01 oolajide-a]# yum install python2-yum
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# yum install python2-yum
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
+[root@ms51-22elkalt01 oolajide-a]# yum install yum-utils
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
+---
+---
+[root@ms51-22elkalt01 oolajide-a]# python2 /bin/yum install yum-utils
+Loaded plugins: fastestmirror, langpacks, rhnplugin
+There was an error communicating with RHN.
+Red Hat Satellite or RHN Classic support will be disabled.
+rhn-plugin: Error communicating with server. The message was:
+Name or service not known
+Determining fastest mirrors
+CentOS-7-Base                                                                                                                                                         | 1.8 kB  00:00:00     
+CentOS-7-Extras                                                                                                                                                       | 1.5 kB  00:00:00     
+CentOS-7-Updates                                                                                                                                                      | 1.5 kB  00:00:00     
+CentOS-7-epel                                                                                                                                                         | 2.3 kB  00:00:00     
+elk                                                                                                                                                                   | 1.5 kB  00:00:00     
+hs_internal_rpm                                                                                                                                                       | 1.5 kB  00:00:00     
+hs_internal_rpm_centos                                                                                                                                                | 1.5 kB  00:00:00     
+http://ms01-12spwlk01.hedgeservmgmt.com/pub/packages/repodata/repomd.xml: [Errno 14] curl#6 - "Could not resolve host: ms01-12spwlk01.hedgeservmgmt.com; Unknown error"
+Trying other mirror.
+  File "/usr/libexec/urlgrabber-ext-down", line 28
+    except OSError, e:
+                  ^
+SyntaxError: invalid syntax
+  File "/usr/libexec/urlgrabber-ext-down", line 28
+    except OSError, e:
+                  ^
+SyntaxError: invalid syntax
+
+
+Exiting on user cancel
+[root@ms51-22elkalt01 oolajide-a]# ls -la /usr/bin/python*
+lrwxrwxrwx 1 root root    12 Jul 28  2025 /usr/bin/python -> /bin/python3
+lrwxrwxrwx 1 root root     9 Sep 17  2021 /usr/bin/python2 -> python2.7
+-rwxr-xr-x 1 root root  7144 Nov 16  2020 /usr/bin/python2.7
+lrwxrwxrwx 1 root root     9 Jul 15  2025 /usr/bin/python3 -> python3.6
+-rwxr-xr-x 2 root root 11336 Nov 14  2023 /usr/bin/python3.6
+lrwxrwxrwx 1 root root    17 Jul 15  2025 /usr/bin/python3.6-config -> python3.6m-config
+-rwxr-xr-x 2 root root 11336 Nov 14  2023 /usr/bin/python3.6m
+-rwxr-xr-x 1 root root   173 Nov 14  2023 /usr/bin/python3.6m-config
+-rwxr-xr-x 1 root root  3403 Nov 14  2023 /usr/bin/python3.6m-x86_64-config
+lrwxrwxrwx 1 root root    16 Jul 15  2025 /usr/bin/python3-config -> python3.6-config
