@@ -19,8 +19,9 @@ SyntaxError: invalid syntax
     except KeyboardInterrupt, e:
                             ^
 SyntaxError: invalid syntax
----
----
+########
+
+########
 [root@ms51-22elkalt01 oolajide-a]# python2 /bin/yum install yum-utils
 Loaded plugins: fastestmirror, langpacks, rhnplugin
 There was an error communicating with RHN.
