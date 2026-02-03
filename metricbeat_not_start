@@ -1,0 +1,9 @@
+PS C:\Users\oolajide-a> Start-Service metricbeat
+Start-Service : Service 'metricbeat (metricbeat)' cannot be started due to the following error: Cannot start service
+metricbeat on computer '.'.
+At line:1 char:1
++ Start-Service metricbeat
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (System.ServiceProcess.ServiceController:ServiceController) [Start-Service],
+   ServiceCommandException
+    + FullyQualifiedErrorId : CouldNotStartService,Microsoft.PowerShell.Commands.StartServiceCommand
