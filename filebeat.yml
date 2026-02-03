@@ -1,0 +1,157 @@
+filebeat.inputs:
+
+- type: log
+  enabled: True
+  paths:
+    - C:\Program Files\filebeat\logs\filebeat*
+  fields:
+    service.environment: PROD
+    service.type: filebeat
+    service.name: filebeat-logs
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server Enterprise\EFT-*.log*
+  multiline.pattern: ^[0-9]{2}-[0-9]{2}-[0-9]{2}
+  multiline.negate: True
+  multiline.match: after
+  multiline.skip_newline: true
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-Server-Log
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server Enterprise\Logs\u_in*.log
+  multiline.pattern: ^\d+.\d+.\d+.\d+
+  multiline.negate: True
+  multiline.match: after
+  multiline.skip_newline: true
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-Transmission-Log
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server Enterprise\Logs\u_ex*.log
+  multiline.pattern: ^\d+.\d+.\d+.\d+
+  multiline.negate: True
+  multiline.match: after
+  multiline.skip_newline: true
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-Transmission-Log-New
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server Enterprise\Logs\*.log
+  exclude_files: ['u_in*', 'u_ex*']
+  multiline.pattern: ^[0-9]{1,2}\/[0-9]{2}\/[0-9]{4}
+  multiline.negate: True
+  multiline.match: after
+  multiline.skip_newline: true
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-Workflow-Logs
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server Enterprise\AWE\Temp\*.csv
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-EventRule-Logs
+  fields_under_root: True
+  ignore_decoding_error: True
+
+- type: log
+  enabled: True
+  paths:
+    - C:\ProgramData\Globalscape\EFT Server\*.log
+  multiline.pattern: ^[0-9]{2}-[0-9]{2}-[0-9]{2}
+  multiline.negate: True
+  multiline.match: after
+  multiline.skip_newline: true
+  fields:
+    app-env: PROD
+    client-env: MW-FTSSN
+    app-name: globalscape
+    app-log-type: EFT-Server-Log-New
+  fields_under_root: True
+  ignore_decoding_error: True
+  reload.enabled: false
+
+setup.ilm.enabled: false
+setup.template.enabled: false
+setup.dashboards.enabled: false
+
+queue.mem:
+  events: 12000
+  flush.min_events: 3000
+  flush.timeout: 5s
+
+output.elasticsearch:
+  hosts: [https://hselkprod.hedgeserv.net:9243]
+  username: filebeat_internal
+  password: ${ES_PWD}
+  pipeline: filebeat_main
+  ssl.verification_mode: none
+  bulk_max_size: 500
+  worker: 2
+  index: filebeat-%{[agent.version]}
+
+processors:
+  - add_locale: ~
+  - add_labels:
+      labels:
+        app_code: FTSSN
+        datacenter: newCS01
+        domain: hedgeservcustomers.com
+        elk_ansible_version: 1.44.31
+  - rename:
+      when:
+        not:
+          has_fields: ["host.hostname"]
+      fields:
+        - from: "host.name"
+          to: "host.hostname"
+  - drop_fields:
+      fields: ["agent.ephemeral_id","agent.hostname","agent.id","agent.name","ecs.version","metricset.period","input.type"]
+  - truncate_fields:
+      fields:
+      - message
+      max_bytes: 256000
+      fail_on_error: false
+      ignore_missing: true
+
+#logging:
+#  to_files: true
+#  files:
+#    path: C:\Program Files\filebeat\logs
+#    keepfiles: 20
+#  level: debug
+#  selectors: [harvester, input]
