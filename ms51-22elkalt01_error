@@ -1,0 +1,21 @@
+[oolajide-a@ms51-22elkalt01 ~]$ sudo su
+[root@ms51-22elkalt01 oolajide-a]# dnf install python2-dnf
+bash: dnf: command not found
+[root@ms51-22elkalt01 oolajide-a]# yum install python2-yum
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# 
+[root@ms51-22elkalt01 oolajide-a]# yum install python2-yum
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
+[root@ms51-22elkalt01 oolajide-a]# yum install yum-utils
+  File "/bin/yum", line 30
+    except KeyboardInterrupt, e:
+                            ^
+SyntaxError: invalid syntax
