@@ -1436,3 +1436,25 @@
     }
   }
 }
+
+
+-------------
+-------------
+
+{
+  "error": {
+    "root_cause": [
+      {
+        "type": "illegal_argument_exception",
+        "reason": "illegal value can't update [index.blocks.write] from [true] to [false]"
+      }
+    ],
+    "type": "illegal_argument_exception",
+    "reason": "illegal value can't update [index.blocks.write] from [true] to [false]",
+    "caused_by": {
+      "type": "illegal_argument_exception",
+      "reason": "Cannot remove write block from searchable snapshot index"
+    }
+  },
+  "status": 400
+}
