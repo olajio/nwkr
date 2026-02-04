@@ -1,0 +1,1421 @@
+# 28: GET /partial-restored-.ds-traces-apm-default-2026.01.05-005337/_mapping 200 OK
+{
+  "partial-restored-.ds-traces-apm-default-2026.01.05-005337": {
+    "mappings": {
+      "dynamic": "true",
+      "_data_stream_timestamp": {
+        "enabled": true
+      },
+      "dynamic_templates": [
+        {
+          "numeric_labels": {
+            "path_match": "numeric_labels.*",
+            "mapping": {
+              "scaling_factor": 1000000,
+              "type": "scaled_float"
+            }
+          }
+        },
+        {
+          "ecs_timestamp": {
+            "match": "@timestamp",
+            "mapping": {
+              "ignore_malformed": false,
+              "type": "date"
+            }
+          }
+        },
+        {
+          "ecs_message_match_only_text": {
+            "path_match": [
+              "message",
+              "*.message"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "match_only_text"
+            }
+          }
+        },
+        {
+          "ecs_non_indexed_keyword": {
+            "path_match": "*event.original",
+            "mapping": {
+              "doc_values": false,
+              "index": false,
+              "type": "keyword"
+            }
+          }
+        },
+        {
+          "ecs_non_indexed_long": {
+            "path_match": "*.x509.public_key_exponent",
+            "mapping": {
+              "doc_values": false,
+              "index": false,
+              "type": "long"
+            }
+          }
+        },
+        {
+          "ecs_ip": {
+            "path_match": [
+              "ip",
+              "*.ip",
+              "*_ip"
+            ],
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "ip"
+            }
+          }
+        },
+        {
+          "ecs_wildcard": {
+            "path_match": [
+              "*.io.text",
+              "*.message_id",
+              "*registry.data.strings",
+              "*url.path"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_path_match_wildcard_and_match_only_text": {
+            "path_match": [
+              "*.body.content",
+              "*url.full",
+              "*url.original"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_match_wildcard_and_match_only_text": {
+            "match": [
+              "*command_line",
+              "*stack_trace"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_path_match_keyword_and_match_only_text": {
+            "path_match": [
+              "*.title",
+              "*.executable",
+              "*.name",
+              "*.working_directory",
+              "*.full_name",
+              "*file.path",
+              "*file.target_path",
+              "*os.full",
+              "*email.subject",
+              "*vulnerability.description",
+              "*user_agent.original"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "keyword"
+            }
+          }
+        },
+        {
+          "ecs_date": {
+            "path_match": [
+              "*.timestamp",
+              "*_timestamp",
+              "*.not_after",
+              "*.not_before",
+              "*.accessed",
+              "created",
+              "*.created",
+              "*.installed",
+              "*.creation_date",
+              "*.ctime",
+              "*.mtime",
+              "ingested",
+              "*.ingested",
+              "*.start",
+              "*.end",
+              "*.indicator.first_seen",
+              "*.indicator.last_seen",
+              "*.indicator.modified_at",
+              "*threat.enrichments.matched.occurred"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "date"
+            }
+          }
+        },
+        {
+          "ecs_path_match_float": {
+            "path_match": [
+              "*.score.*",
+              "*_score*"
+            ],
+            "path_unmatch": "*.version",
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "float"
+            }
+          }
+        },
+        {
+          "ecs_usage_double_scaled_float": {
+            "path_match": "*.usage",
+            "match_mapping_type": [
+              "double",
+              "long",
+              "string"
+            ],
+            "mapping": {
+              "scaling_factor": 1000,
+              "type": "scaled_float"
+            }
+          }
+        },
+        {
+          "ecs_geo_point": {
+            "path_match": "*.geo.location",
+            "mapping": {
+              "type": "geo_point"
+            }
+          }
+        },
+        {
+          "ecs_flattened": {
+            "path_match": [
+              "*structured_data",
+              "*exports",
+              "*imports"
+            ],
+            "match_mapping_type": "object",
+            "mapping": {
+              "type": "flattened"
+            }
+          }
+        },
+        {
+          "all_strings_to_keywords": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            }
+          }
+        }
+      ],
+      "date_detection": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date",
+          "ignore_malformed": false
+        },
+        "agent": {
+          "properties": {
+            "activation_method": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ephemeral_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "client": {
+          "properties": {
+            "geo": {
+              "properties": {
+                "city_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "continent_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "country_iso_code": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "country_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "location": {
+                  "type": "geo_point"
+                },
+                "region_iso_code": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "region_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "ip": {
+              "type": "ip"
+            }
+          }
+        },
+        "cloud": {
+          "properties": {
+            "account": {
+              "properties": {
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "availability_zone": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "instance": {
+              "properties": {
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "machine": {
+              "properties": {
+                "type": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "provider": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "region": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "service": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "container": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "data_stream": {
+          "properties": {
+            "dataset": {
+              "type": "constant_keyword",
+              "value": "apm"
+            },
+            "namespace": {
+              "type": "constant_keyword",
+              "value": "default"
+            },
+            "type": {
+              "type": "constant_keyword",
+              "value": "traces"
+            }
+          }
+        },
+        "destination": {
+          "properties": {
+            "address": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "port": {
+              "type": "long"
+            }
+          }
+        },
+        "event": {
+          "properties": {
+            "duration": {
+              "type": "float"
+            },
+            "ingested": {
+              "type": "date"
+            },
+            "outcome": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "success_count": {
+              "type": "byte",
+              "index": false
+            }
+          }
+        },
+        "host": {
+          "properties": {
+            "architecture": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "hostname": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "os": {
+              "properties": {
+                "platform": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            }
+          }
+        },
+        "hs_transaction": {
+          "properties": {
+            "duration": {
+              "properties": {
+                "s": {
+                  "type": "float"
+                },
+                "us": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+        "http": {
+          "properties": {
+            "request": {
+              "properties": {
+                "body": {
+                  "type": "object",
+                  "dynamic": "false"
+                },
+                "cookies": {
+                  "type": "object",
+                  "dynamic": "false"
+                },
+                "headers": {
+                  "type": "flattened"
+                },
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "method": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "response": {
+              "properties": {
+                "decoded_body_size": {
+                  "type": "long",
+                  "index": false
+                },
+                "encoded_body_size": {
+                  "type": "long",
+                  "index": false
+                },
+                "finished": {
+                  "type": "boolean"
+                },
+                "headers": {
+                  "type": "flattened"
+                },
+                "headers_sent": {
+                  "type": "boolean"
+                },
+                "status_code": {
+                  "type": "long"
+                },
+                "transfer_size": {
+                  "type": "long",
+                  "index": false
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "kubernetes": {
+          "properties": {
+            "namespace": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "pod": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "uid": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            }
+          }
+        },
+        "labels": {
+          "properties": {
+            "ExecutionVenue": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXClientId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXSenderId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXVendor": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "InstrumentId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "action": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "app_session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "aws_s3_bucket": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "aws_s3_key": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "bloomberg_job_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "call_stack": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistDate": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistName": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistUrl": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "client": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "client_code": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "createdBy": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "current_workflow": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "current_workflow_step": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "dataset": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "date": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "distinguished_name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "dueOn": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "emulator": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "entity": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "eventType": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "event_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "filter": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "fund_currency": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "initiator": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "instrument_name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "is_public_api_request": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "is_ui_request": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "k8s_namespace": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "lag_in_seconds": {
+              "type": "long"
+            },
+            "load_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "lookup_class": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "map_name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "market_date": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "pricing_regime": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "query_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "redelivered": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "requestId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "requestTimeout": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "s3_url": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "searchBase": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "socket_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sqs_message_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "stepId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "stepName": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sub_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "subscriptionId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "tag": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "template": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "unapproved_comments": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "url": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "user_session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "username": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "valuation_request_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "valuation_request_item_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "variable_segments": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "zoneId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "numeric_labels": {
+          "properties": {
+            "count": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "memory_delta_bytes": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "num_failed": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "num_processed": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "num_warnings": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "number_of_trades": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "queue_time_seconds": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "thread_queue_time_seconds": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "total_number_of_trades": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            }
+          }
+        },
+        "observer": {
+          "properties": {
+            "hostname": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "parent": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "process": {
+          "properties": {
+            "args": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "parent": {
+              "properties": {
+                "pid": {
+                  "type": "long"
+                }
+              }
+            },
+            "pid": {
+              "type": "long"
+            },
+            "title": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            }
+          }
+        },
+        "processor": {
+          "properties": {
+            "event": {
+              "type": "keyword"
+            }
+          }
+        },
+        "service": {
+          "properties": {
+            "environment": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "framework": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "language": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "node": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            },
+            "runtime": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "target": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "source": {
+          "properties": {
+            "ip": {
+              "type": "ip"
+            },
+            "nat": {
+              "properties": {
+                "ip": {
+                  "type": "ip"
+                }
+              }
+            }
+          }
+        },
+        "span": {
+          "properties": {
+            "action": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "composite": {
+              "properties": {
+                "compression_strategy": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "count": {
+                  "type": "long"
+                },
+                "sum": {
+                  "properties": {
+                    "us": {
+                      "type": "long"
+                    }
+                  }
+                }
+              }
+            },
+            "db": {
+              "properties": {
+                "instance": {
+                  "type": "keyword"
+                },
+                "link": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "rows_affected": {
+                  "type": "long"
+                },
+                "statement": {
+                  "type": "text",
+                  "fields": {
+                    "statement": {
+                      "type": "keyword"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "keyword"
+                },
+                "user": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "fields": {
+                        "text": {
+                          "type": "match_only_text"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "destination": {
+              "properties": {
+                "service": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    },
+                    "resource": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    },
+                    "type": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "duration": {
+              "properties": {
+                "us": {
+                  "type": "long"
+                }
+              }
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "kind": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "links": {
+              "properties": {
+                "span": {
+                  "properties": {
+                    "id": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                },
+                "trace": {
+                  "properties": {
+                    "id": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "message": {
+              "properties": {
+                "age": {
+                  "properties": {
+                    "ms": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "body": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "queue": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "representative_count": {
+              "type": "scaled_float",
+              "index": false,
+              "scaling_factor": 1000
+            },
+            "stacktrace": {
+              "type": "object",
+              "dynamic": "false"
+            },
+            "subtype": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sync": {
+              "type": "boolean"
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "timestamp": {
+          "properties": {
+            "us": {
+              "type": "long"
+            }
+          }
+        },
+        "trace": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "transaction": {
+          "properties": {
+            "custom": {
+              "type": "object",
+              "dynamic": "false"
+            },
+            "duration": {
+              "properties": {
+                "s": {
+                  "type": "double"
+                },
+                "us": {
+                  "type": "long",
+                  "meta": {
+                    "unit": "micros"
+                  }
+                }
+              }
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "message": {
+              "properties": {
+                "age": {
+                  "properties": {
+                    "ms": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "body": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "queue": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "fields": {
+                        "text": {
+                          "type": "match_only_text"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "profiler_stack_trace_ids": {
+              "type": "counted_keyword"
+            },
+            "representative_count": {
+              "type": "scaled_float",
+              "index": false,
+              "scaling_factor": 1000
+            },
+            "result": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sampled": {
+              "type": "boolean"
+            },
+            "span_count": {
+              "properties": {
+                "dropped": {
+                  "type": "long"
+                },
+                "started": {
+                  "type": "long"
+                }
+              }
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "url": {
+          "properties": {
+            "domain": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "full": {
+              "type": "wildcard",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "original": {
+              "type": "wildcard",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "path": {
+              "type": "wildcard"
+            },
+            "port": {
+              "type": "long"
+            },
+            "query": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "scheme": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "user": {
+          "properties": {
+            "email": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "user_agent": {
+          "properties": {
+            "device": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "original": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "os": {
+              "properties": {
+                "full": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        }
+      }
+    }
+  }
+}
+# 29: GET /partial-restored-.ds-traces-apm-default-2026.01.05-005337/_count 200 OK
+{
+  "count": 95641622,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  }
+}
