@@ -1,0 +1,30 @@
+[root@MS01-11ELK01 conf.d]# python3 -W ignore /etc/logstash/scripts/sftp_monitoring/sftp.py --hostname 'fts.hedgeserv.com' --pwd 'password_value'
+Exception occured:  Timeout exceeded.
+<pexpect.pty_spawn.spawn object at 0x7efe4d0ccc50>
+command: /bin/sftp
+args: ['/bin/sftp', 'sftpmonitor1@fts.hedgeserv.com']
+buffer (last 100 chars): b'password: '
+before (last 100 chars): b'EFT Login - %DATE% %TIME% - Please enter valid credentials to continueEnter password: '
+after: <class 'pexpect.exceptions.TIMEOUT'>
+match: None
+match_index: None
+exitstatus: None
+flag_eof: False
+pid: 17113
+child_fd: 5
+closed: False
+timeout: 30
+delimiter: <class 'pexpect.exceptions.EOF'>
+logfile: None
+logfile_read: None
+logfile_send: None
+maxread: 2000
+ignorecase: False
+searchwindowsize: None
+delaybeforesend: 0.05
+delayafterclose: 0.1
+delayafterterminate: 0.1
+searcher: searcher_string:
+    0: b'(yes/no)? '
+{"@timestamp": "2026-02-03T19:27:51.276997", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
+{"@timestamp": "2026-02-03T19:27:51.277142", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
