@@ -101,3 +101,40 @@ runuser -u logstash -- python3 -W ignore /etc/logstash/scripts/sftp_monitoring/s
 ```
 
 What does Step 3 show you?
+
+---
+---
+Here's a simple explanation for your team:
+
+---
+
+## What Fixed the Issue
+
+The logstash user's home directory didn't have the SSH host key for `fts.hedgeserv.com`. I added the host key to the correct location.
+
+### Steps Taken
+
+1. **Identified the logstash user's actual home directory:**
+   ```bash
+   grep logstash /etc/passwd
+   ```
+
+2. **Created the `.ssh` directory in that home directory and added the host key:**
+   ```bash
+   LOGSTASH_HOME=$(grep logstash /etc/passwd | cut -d: -f6)
+   mkdir -p ${LOGSTASH_HOME}/.ssh
+   ssh-keyscan fts.hedgeserv.com >> ${LOGSTASH_HOME}/.ssh/known_hosts
+   ```
+
+3. **Set the correct ownership and permissions:**
+   ```bash
+   chown -R logstash:logstash ${LOGSTASH_HOME}/.ssh
+   chmod 700 ${LOGSTASH_HOME}/.ssh
+   chmod 644 ${LOGSTASH_HOME}/.ssh/known_hosts
+   ```
+
+### Why This Worked
+
+Earlier attempts to copy the known_hosts file to `/var/lib/logstash/.ssh/` didn't work because that wasn't the logstash user's actual home directory. SSH looks for the known_hosts file in the user's home directory as defined in `/etc/passwd`. Once we added the host key to the correct location, the script was able to connect without prompting for host key verification.
+
+---
