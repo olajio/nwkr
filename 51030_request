@@ -1,0 +1,12 @@
+51030 Cost Anomaly Alerting dynamically sets the priority of the ticket based on the value of total_impact. 
+P1:
+     - was total_impact >= 5000,
+     - we now want it to be total_impact >= 2500.
+
+P2
+     -was total_impact >= 1000 and total_impact < 5000,
+     -we now want it to be total_impact >= 750 and total_impact < 2500
+
+P3
+     - was total_impact < 1000,
+     - we now want it to be total_impact < 750.
