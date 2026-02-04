@@ -37,3 +37,49 @@ searcher: searcher_string:
 [root@MS01-11ELK01 conf.d]# python3 -W ignore /etc/logstash/scripts/sftp_monitoring/sftp.py --hostname 'fts.hedgeserv.com' --pwd '9m4FS*-p-&8' --test_connection 'regular'
 {"@timestamp": "2026-02-03T19:46:25.464949", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
 {"@timestamp": "2026-02-03T19:46:25.465117", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
+
+
+
+
+
+------
+------
+[root@MS01-11ELK01 conf.d]# sudo -u root python3 -W ignore /etc/logstash/scripts/sftp_monitoring/sftp.py --hostname 'fts.hedgeserv.com' --pwd '9m4FS*-p-&8' --test_connection 'regular'
+{"@timestamp": "2026-02-03T20:00:34.320021", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
+{"@timestamp": "2026-02-03T20:00:34.320167", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
+[root@MS01-11ELK01 conf.d]# 
+[root@MS01-11ELK01 conf.d]# 
+[root@MS01-11ELK01 conf.d]# 
+[root@MS01-11ELK01 conf.d]# 
+[root@MS01-11ELK01 conf.d]# 
+[root@MS01-11ELK01 conf.d]# sudo -u logstash python3 -W ignore /etc/logstash/scripts/sftp_monitoring/sftp.py --hostname 'fts.hedgeserv.com' --pwd '9m4FS*-p-&8' --test_connection 'regular'
+Exception occured:  Timeout exceeded.
+<pexpect.pty_spawn.spawn object at 0x7ff58647dc88>
+command: /bin/sftp
+args: ['/bin/sftp', 'sftpmonitor1@fts.hedgeserv.com']
+buffer (last 100 chars): b'(yes/no)? '
+before (last 100 chars): b':50:34:8d:4d:ca:05:be:c0:d3:69:d1:79:2a:3c.\r\nAre you sure you want to continue connecting (yes/no)? '
+after: <class 'pexpect.exceptions.TIMEOUT'>
+match: None
+match_index: None
+exitstatus: None
+flag_eof: False
+pid: 9586
+child_fd: 5
+closed: False
+timeout: 30
+delimiter: <class 'pexpect.exceptions.EOF'>
+logfile: None
+logfile_read: None
+logfile_send: None
+maxread: 2000
+ignorecase: False
+searchwindowsize: None
+delaybeforesend: 0.05
+delayafterclose: 0.1
+delayafterterminate: 0.1
+searcher: searcher_string:
+    0: b'password: '
+{"@timestamp": "2026-02-03T20:01:11.674974", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
+{"@timestamp": "2026-02-03T20:01:11.675114", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
+
