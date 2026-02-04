@@ -1419,3 +1419,20 @@
     "failed": 0
   }
 }
+
+
+
+
+-------------
+-------------
+{
+  "partial-restored-.ds-traces-apm-default-2026.01.05-005337": {
+    "settings": {
+      "index": {
+        "blocks": {
+          "write": "true"
+        }
+      }
+    }
+  }
+}
