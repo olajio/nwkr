@@ -28,3 +28,12 @@ searcher: searcher_string:
     0: b'(yes/no)? '
 {"@timestamp": "2026-02-03T19:27:51.276997", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
 {"@timestamp": "2026-02-03T19:27:51.277142", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "ERROR"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
+
+
+
+
+
+
+[root@MS01-11ELK01 conf.d]# python3 -W ignore /etc/logstash/scripts/sftp_monitoring/sftp.py --hostname 'fts.hedgeserv.com' --pwd '9m4FS*-p-&8' --test_connection 'regular'
+{"@timestamp": "2026-02-03T19:46:25.464949", "service": {"type": "SFTP", "name": "SFTPUpload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "created"}}
+{"@timestamp": "2026-02-03T19:46:25.465117", "service": {"type": "SFTP", "name": "SFTPDownload"}, "log": {"level": "INFO"}, "hostname": "fts.hedgeserv.com", "event": {"type": "sent"}}
