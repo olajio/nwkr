@@ -219,7 +219,7 @@
         }"""
         },
         "headers": {
-          "technician_key": "CCC3E79E-EB24-44CE-95ED-55830A5652DB",
+          "technician_key": "XXXXXXXXXXXXXXXXXXX",
           "Content-Type": "application/x-www-form-urlencoded"
         },
         "connection_timeout_in_millis": 30000,
@@ -285,7 +285,7 @@
         }"""
         },
         "headers": {
-          "technician_key": "CCC3E79E-EB24-44CE-95ED-55830A5652DB",
+          "technician_key": "XXXXXXXXXXXXXXXXXXX",
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }
