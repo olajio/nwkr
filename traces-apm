@@ -1458,3 +1458,4188 @@
   },
   "status": 400
 }
+--------
+--------
+
+# 1506: GET test-traces-apm-restored-2026.01.05/_count 200 OK
+{
+  "count": 136000,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  }
+}
+# 1507: GET test-traces-apm-restored-2026.01.05/_search?size=1 200 OK
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 10000,
+      "relation": "gte"
+    },
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "test-traces-apm-restored-2026.01.05",
+        "_id": "nb9ZkZsBqFJO1D7qQrOU",
+        "_score": 1,
+        "_source": {
+          "parent": {
+            "id": "e188ec57f59d23be"
+          },
+          "agent": {
+            "activation_method": "nuget",
+            "name": "dotnet",
+            "version": "1.25.3+730e0f64e647bc32250d011e06ac9f080b75b487"
+          },
+          "destination": {
+            "address": "redis-13080.rlec3.hedgeservtest.com",
+            "port": 13080
+          },
+          "hs_transaction": {
+            "duration": {
+              "s": 0.5859
+            }
+          },
+          "processor": {
+            "event": "span"
+          },
+          "labels.lag_in_seconds": 0,
+          "observer": {
+            "hostname": "5cef56828ff9",
+            "type": "apm-server",
+            "version": "8.19.4"
+          },
+          "trace": {
+            "id": "93f4573753ee15775a59a01dab251231"
+          },
+          "@timestamp": "2026-01-06T03:28:24.476Z",
+          "data_stream": {
+            "namespace": "default",
+            "type": "traces",
+            "dataset": "apm"
+          },
+          "service": {
+            "node": {
+              "name": "ts01-40hyval010.hedgeservtest.com"
+            },
+            "environment": "uat-edge",
+            "framework": {
+              "name": "ASP.NET Core",
+              "version": "8.0.0.0"
+            },
+            "name": "CAVIAR MarketData Service",
+            "runtime": {
+              "name": ".NET 8",
+              "version": "8.0.8"
+            },
+            "language": {
+              "name": "C#"
+            },
+            "version": "1.0.0.528",
+            "target": {
+              "type": "redis"
+            }
+          },
+          "host": {
+            "hostname": "ts01-40hyval010.hedgeservtest.com",
+            "ip": [
+              "162.213.124.226"
+            ],
+            "name": "ts01-40hyval010.hedgeservtest.com"
+          },
+          "event": {
+            "ingested": "2026-01-06T03:28:24Z",
+            "success_count": 1,
+            "outcome": "success"
+          },
+          "transaction": {
+            "id": "8c6797390070ebfb"
+          },
+          "span": {
+            "duration": {
+              "us": 585
+            },
+            "representative_count": 1,
+            "subtype": "redis",
+            "destination": {
+              "service": {
+                "resource": "redis"
+              }
+            },
+            "name": "XADD",
+            "action": "query",
+            "id": "d59fba654b4bb072",
+            "type": "db",
+            "db": {
+              "type": "redis"
+            }
+          },
+          "timestamp": {
+            "us": 1767670104476360
+          }
+        }
+      }
+    ]
+  }
+}
+# 1508: GET test-traces-apm-restored-2026.01.05/_mapping 200 OK
+{
+  "test-traces-apm-restored-2026.01.05": {
+    "mappings": {
+      "dynamic": "true",
+      "dynamic_templates": [
+        {
+          "numeric_labels": {
+            "path_match": "numeric_labels.*",
+            "mapping": {
+              "scaling_factor": 1000000,
+              "type": "scaled_float"
+            }
+          }
+        },
+        {
+          "ecs_timestamp": {
+            "match": "@timestamp",
+            "mapping": {
+              "ignore_malformed": false,
+              "type": "date"
+            }
+          }
+        },
+        {
+          "ecs_message_match_only_text": {
+            "path_match": [
+              "message",
+              "*.message"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "match_only_text"
+            }
+          }
+        },
+        {
+          "ecs_non_indexed_keyword": {
+            "path_match": "*event.original",
+            "mapping": {
+              "doc_values": false,
+              "index": false,
+              "type": "keyword"
+            }
+          }
+        },
+        {
+          "ecs_non_indexed_long": {
+            "path_match": "*.x509.public_key_exponent",
+            "mapping": {
+              "doc_values": false,
+              "index": false,
+              "type": "long"
+            }
+          }
+        },
+        {
+          "ecs_ip": {
+            "path_match": [
+              "ip",
+              "*.ip",
+              "*_ip"
+            ],
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "ip"
+            }
+          }
+        },
+        {
+          "ecs_wildcard": {
+            "path_match": [
+              "*.io.text",
+              "*.message_id",
+              "*registry.data.strings",
+              "*url.path"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_path_match_wildcard_and_match_only_text": {
+            "path_match": [
+              "*.body.content",
+              "*url.full",
+              "*url.original"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_match_wildcard_and_match_only_text": {
+            "match": [
+              "*command_line",
+              "*stack_trace"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "wildcard"
+            }
+          }
+        },
+        {
+          "ecs_path_match_keyword_and_match_only_text": {
+            "path_match": [
+              "*.title",
+              "*.executable",
+              "*.name",
+              "*.working_directory",
+              "*.full_name",
+              "*file.path",
+              "*file.target_path",
+              "*os.full",
+              "*email.subject",
+              "*vulnerability.description",
+              "*user_agent.original"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              },
+              "type": "keyword"
+            }
+          }
+        },
+        {
+          "ecs_date": {
+            "path_match": [
+              "*.timestamp",
+              "*_timestamp",
+              "*.not_after",
+              "*.not_before",
+              "*.accessed",
+              "created",
+              "*.created",
+              "*.installed",
+              "*.creation_date",
+              "*.ctime",
+              "*.mtime",
+              "ingested",
+              "*.ingested",
+              "*.start",
+              "*.end",
+              "*.indicator.first_seen",
+              "*.indicator.last_seen",
+              "*.indicator.modified_at",
+              "*threat.enrichments.matched.occurred"
+            ],
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "date"
+            }
+          }
+        },
+        {
+          "ecs_path_match_float": {
+            "path_match": [
+              "*.score.*",
+              "*_score*"
+            ],
+            "path_unmatch": "*.version",
+            "unmatch_mapping_type": "object",
+            "mapping": {
+              "type": "float"
+            }
+          }
+        },
+        {
+          "ecs_usage_double_scaled_float": {
+            "path_match": "*.usage",
+            "match_mapping_type": [
+              "double",
+              "long",
+              "string"
+            ],
+            "mapping": {
+              "scaling_factor": 1000,
+              "type": "scaled_float"
+            }
+          }
+        },
+        {
+          "ecs_geo_point": {
+            "path_match": "*.geo.location",
+            "mapping": {
+              "type": "geo_point"
+            }
+          }
+        },
+        {
+          "ecs_flattened": {
+            "path_match": [
+              "*structured_data",
+              "*exports",
+              "*imports"
+            ],
+            "match_mapping_type": "object",
+            "mapping": {
+              "type": "flattened"
+            }
+          }
+        },
+        {
+          "all_strings_to_keywords": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            }
+          }
+        }
+      ],
+      "date_detection": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "agent": {
+          "properties": {
+            "activation_method": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ephemeral_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "client": {
+          "properties": {
+            "geo": {
+              "properties": {
+                "continent_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "country_iso_code": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "country_name": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "location": {
+                  "type": "geo_point"
+                }
+              }
+            },
+            "ip": {
+              "type": "ip"
+            }
+          }
+        },
+        "cloud": {
+          "properties": {
+            "account": {
+              "properties": {
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "availability_zone": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "instance": {
+              "properties": {
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "machine": {
+              "properties": {
+                "type": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "provider": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "region": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "service": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "container": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "data_stream": {
+          "properties": {
+            "dataset": {
+              "type": "constant_keyword",
+              "value": "apm"
+            },
+            "namespace": {
+              "type": "constant_keyword",
+              "value": "default"
+            },
+            "type": {
+              "type": "constant_keyword",
+              "value": "traces"
+            }
+          }
+        },
+        "destination": {
+          "properties": {
+            "address": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "port": {
+              "type": "long"
+            }
+          }
+        },
+        "event": {
+          "properties": {
+            "duration": {
+              "type": "float"
+            },
+            "ingested": {
+              "type": "date"
+            },
+            "outcome": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "success_count": {
+              "type": "byte",
+              "index": false
+            }
+          }
+        },
+        "host": {
+          "properties": {
+            "architecture": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "hostname": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "os": {
+              "properties": {
+                "platform": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            }
+          }
+        },
+        "hs_transaction": {
+          "properties": {
+            "duration": {
+              "properties": {
+                "s": {
+                  "type": "float"
+                },
+                "us": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
+        "http": {
+          "properties": {
+            "request": {
+              "properties": {
+                "body": {
+                  "type": "object",
+                  "dynamic": "false"
+                },
+                "cookies": {
+                  "type": "object",
+                  "dynamic": "false"
+                },
+                "headers": {
+                  "type": "flattened"
+                },
+                "id": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "method": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "response": {
+              "properties": {
+                "decoded_body_size": {
+                  "type": "long",
+                  "index": false
+                },
+                "encoded_body_size": {
+                  "type": "long",
+                  "index": false
+                },
+                "finished": {
+                  "type": "boolean"
+                },
+                "headers": {
+                  "type": "flattened"
+                },
+                "headers_sent": {
+                  "type": "boolean"
+                },
+                "status_code": {
+                  "type": "long"
+                },
+                "transfer_size": {
+                  "type": "long",
+                  "index": false
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "kubernetes": {
+          "properties": {
+            "namespace": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "pod": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "uid": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            }
+          }
+        },
+        "labels": {
+          "properties": {
+            "ExecutionVenue": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXClientId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXSenderId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "FIXVendor": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "InstrumentId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "action": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "app_session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "aws_s3_bucket": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "aws_s3_key": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "baggage_es": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "call_stack": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistDate": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistName": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "checklistUrl": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "client": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "client_code": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "createdBy": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "current_workflow": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "current_workflow_step": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "data_loaded": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "dataset": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "date": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "distinguished_name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "dueOn": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "emulator": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "entity": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "eventType": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "event_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "filter": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "http_duration_ms": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "http_status_code": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "initiator": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "instrument_name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "is_public_api_request": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "is_ui_request": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "k8s_namespace": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "key_client": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "key_priority": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "key_sequence": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "lag_in_seconds": {
+              "type": "long"
+            },
+            "load_mode": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "load_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "market_date": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "message_id": {
+              "type": "wildcard"
+            },
+            "message_source": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "messaging_operation": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "messaging_system": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "pricing_regime": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "processing_duration_ms": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "processing_status": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "query_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "queue_priority": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "redelivered": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "requestId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "requestTimeout": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "request_client": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "request_date": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "s3_url": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "searchBase": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "socket_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sqs_message_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "stepId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "stepName": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sub_type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "subscriptionId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "tag": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "template": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "trace_headers_present": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "unapproved_comments": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "url": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "user_session_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "username": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "valuation_request_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "valuation_request_item_id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "variable_segments": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "zoneId": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "numeric_labels": {
+          "properties": {
+            "count": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "memory_delta_bytes": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "queue_time_seconds": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            },
+            "thread_queue_time_seconds": {
+              "type": "scaled_float",
+              "scaling_factor": 1000000
+            }
+          }
+        },
+        "observer": {
+          "properties": {
+            "hostname": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "parent": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "process": {
+          "properties": {
+            "args": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "parent": {
+              "properties": {
+                "pid": {
+                  "type": "long"
+                }
+              }
+            },
+            "pid": {
+              "type": "long"
+            },
+            "title": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            }
+          }
+        },
+        "processor": {
+          "properties": {
+            "event": {
+              "type": "keyword"
+            }
+          }
+        },
+        "service": {
+          "properties": {
+            "environment": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "framework": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "language": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "node": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            },
+            "runtime": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "target": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "source": {
+          "properties": {
+            "ip": {
+              "type": "ip"
+            },
+            "nat": {
+              "properties": {
+                "ip": {
+                  "type": "ip"
+                }
+              }
+            }
+          }
+        },
+        "span": {
+          "properties": {
+            "action": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "composite": {
+              "properties": {
+                "compression_strategy": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "count": {
+                  "type": "long"
+                },
+                "sum": {
+                  "properties": {
+                    "us": {
+                      "type": "long"
+                    }
+                  }
+                }
+              }
+            },
+            "db": {
+              "properties": {
+                "instance": {
+                  "type": "keyword"
+                },
+                "link": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "rows_affected": {
+                  "type": "long"
+                },
+                "statement": {
+                  "type": "text",
+                  "fields": {
+                    "statement": {
+                      "type": "keyword"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "keyword"
+                },
+                "user": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "fields": {
+                        "text": {
+                          "type": "match_only_text"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "destination": {
+              "properties": {
+                "service": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    },
+                    "resource": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    },
+                    "type": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "duration": {
+              "properties": {
+                "us": {
+                  "type": "long"
+                }
+              }
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "kind": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "links": {
+              "properties": {
+                "span": {
+                  "properties": {
+                    "id": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                },
+                "trace": {
+                  "properties": {
+                    "id": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "message": {
+              "properties": {
+                "age": {
+                  "properties": {
+                    "ms": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "body": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                },
+                "queue": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "representative_count": {
+              "type": "scaled_float",
+              "index": false,
+              "scaling_factor": 1000
+            },
+            "stacktrace": {
+              "type": "object",
+              "dynamic": "false"
+            },
+            "subtype": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sync": {
+              "type": "boolean"
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "timestamp": {
+          "properties": {
+            "us": {
+              "type": "long"
+            }
+          }
+        },
+        "trace": {
+          "properties": {
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "transaction": {
+          "properties": {
+            "custom": {
+              "type": "object",
+              "dynamic": "false"
+            },
+            "duration": {
+              "properties": {
+                "s": {
+                  "type": "double"
+                },
+                "us": {
+                  "type": "long",
+                  "meta": {
+                    "unit": "micros"
+                  }
+                }
+              }
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "message": {
+              "properties": {
+                "age": {
+                  "properties": {
+                    "ms": {
+                      "type": "long"
+                    }
+                  }
+                },
+                "headers": {
+                  "properties": {
+                    "Javatype": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    },
+                    "Loadmode": {
+                      "type": "keyword",
+                      "ignore_above": 1024
+                    }
+                  }
+                },
+                "queue": {
+                  "properties": {
+                    "name": {
+                      "type": "keyword",
+                      "fields": {
+                        "text": {
+                          "type": "match_only_text"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "profiler_stack_trace_ids": {
+              "type": "counted_keyword"
+            },
+            "representative_count": {
+              "type": "scaled_float",
+              "index": false,
+              "scaling_factor": 1000
+            },
+            "result": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "sampled": {
+              "type": "boolean"
+            },
+            "span_count": {
+              "properties": {
+                "dropped": {
+                  "type": "long"
+                },
+                "started": {
+                  "type": "long"
+                }
+              }
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "url": {
+          "properties": {
+            "domain": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "full": {
+              "type": "wildcard",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "original": {
+              "type": "wildcard",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "path": {
+              "type": "wildcard"
+            },
+            "port": {
+              "type": "long"
+            },
+            "query": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "scheme": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "user": {
+          "properties": {
+            "email": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "id": {
+              "type": "keyword",
+              "ignore_above": 1024
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "type": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        },
+        "user_agent": {
+          "properties": {
+            "device": {
+              "properties": {
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "original": {
+              "type": "keyword",
+              "fields": {
+                "text": {
+                  "type": "match_only_text"
+                }
+              }
+            },
+            "os": {
+              "properties": {
+                "full": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "keyword",
+                  "fields": {
+                    "text": {
+                      "type": "match_only_text"
+                    }
+                  }
+                },
+                "version": {
+                  "type": "keyword",
+                  "ignore_above": 1024
+                }
+              }
+            },
+            "version": {
+              "type": "keyword",
+              "ignore_above": 1024
+            }
+          }
+        }
+      }
+    }
+  }
+}
+# 1509: GET test-traces-apm-restored-2026.01.05/_settings 200 OK
+{
+  "test-traces-apm-restored-2026.01.05": {
+    "settings": {
+      "index": {
+        "routing": {
+          "allocation": {
+            "include": {
+              "_tier_preference": "data_content"
+            }
+          }
+        },
+        "number_of_shards": "1",
+        "provided_name": "test-traces-apm-restored-2026.01.05",
+        "creation_date": "1770250945502",
+        "number_of_replicas": "1",
+        "uuid": "auI4y9-BTvWC0eGzkOhBjg",
+        "version": {
+          "created": "8536000"
+        }
+      }
+    }
+  }
+}
+# 1510: GET test-traces-apm-restored-2026.01.05/_field_caps?fields=* 200 OK
+{
+  "indices": [
+    "test-traces-apm-restored-2026.01.05"
+  ],
+  "fields": {
+    "parent": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.valuation_request_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_ignored_source": {
+      "_ignored_source": {
+        "type": "_ignored_source",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.call_stack": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.checklistUrl": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.queue.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "http.request.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.hostname": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.language.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "container.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "observer": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "hs_transaction.duration.s": {
+      "float": {
+        "type": "float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.links.trace.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "url.query": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.session_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.query_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.finished": {
+      "boolean": {
+        "type": "boolean",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "destination.address": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.message": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.composite.sum.us": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.baggage_es": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.encoded_body_size": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_version": {
+      "_version": {
+        "type": "_version",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": true
+      }
+    },
+    "user_agent.original": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.transfer_size": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.region": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.s3_url": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.language.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "http.request.headers": {
+      "flattened": {
+        "type": "flattened",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.account": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "transaction.duration.us": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true,
+        "meta": {
+          "unit": [
+            "micros"
+          ]
+        }
+      }
+    },
+    "hs_transaction": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "processor": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.dataset": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "cloud.service": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "url.path": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.framework": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "observer.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "transaction.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.load_type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.message_source": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.composite.count": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "hs_transaction.duration": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.sub_type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.os.full": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.checklistName": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.node.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.redelivered": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.sync": {
+      "boolean": {
+        "type": "boolean",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.os.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.key_sequence": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.date": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.node.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "labels.template": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.ip": {
+      "ip": {
+        "type": "ip",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.sqs_message_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.requestId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "timestamp": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.message.age": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.messaging_operation": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.environment": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.emulator": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "hs_transaction.duration.us": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.profiler_stack_trace_ids_count": {
+      "binary": {
+        "type": "binary",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": true
+      }
+    },
+    "labels.queue_priority": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "labels.k8s_namespace": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_field_names": {
+      "_field_names": {
+        "type": "_field_names",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "cloud.account.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.os.platform": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "numeric_labels.count": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.checklistId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.device.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "labels.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "kubernetes": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "agent": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.key_priority": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.instance": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.stepId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.representative_count": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "source": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "user_agent.os.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.composite.sum": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.db.statement.statement": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_ignored": {
+      "_ignored": {
+        "type": "_ignored",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.user.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "host.os": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "processor.event": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.aws_s3_key": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_routing": {
+      "_routing": {
+        "type": "_routing",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "_doc_count": {
+      "integer": {
+        "type": "integer",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "agent.activation_method": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.runtime.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "numeric_labels.thread_queue_time_seconds": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.ip": {
+      "ip": {
+        "type": "ip",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.destination.service": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.request_client": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.composite": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "transaction.message.queue.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "timestamp.us": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.link": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.action": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.aws_s3_bucket": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "agent.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.eventType": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.messaging_system": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.links.span.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "kubernetes.pod.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "span.links": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.market_date": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "process.parent": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "destination": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.db.rows_affected": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.target": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "user_agent.os.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "labels.filter": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.duration": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.searchBase": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.headers.Javatype": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.pricing_regime": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.http_duration_ms": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.FIXVendor": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.statement": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "service.language": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "url.port": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.current_workflow_step": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.distinguished_name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.headers": {
+      "flattened": {
+        "type": "flattened",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "kubernetes.pod.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "url.full": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.createdBy": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.user": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.message.queue": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.framework.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.data_loaded": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "process.args": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.profiler_stack_trace_ids": {
+      "counted_keyword": {
+        "type": "counted_keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "url.original": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.is_public_api_request": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.message.body": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "user.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.device": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.processing_duration_ms": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.is_ui_request": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.headers.Loadmode": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.decoded_body_size": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "container": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.instrument_name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.original.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "process.parent.pid": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.geo.country_iso_code": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.geo": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "transaction.result": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.client": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "agent.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "cloud.service.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "source.ip": {
+      "ip": {
+        "type": "ip",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "agent.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.dueOn": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.response.status_code": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "http.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "event.outcome": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_inference_fields": {
+      "_inference_fields": {
+        "type": "_inference_fields",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.username": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.checklistDate": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.age.ms": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.runtime.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.app_session_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.FIXSenderId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.architecture": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.provider": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.machine.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.links.span": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.current_workflow": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.machine": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.client_code": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_source": {
+      "_source": {
+        "type": "_source",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.destination.service.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.duration.s": {
+      "double": {
+        "type": "double",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.action": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.FIXClientId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "destination.port": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "kubernetes.pod": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.links.trace": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.stepName": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.user.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.event_type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "url.scheme": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "source.nat.ip": {
+      "ip": {
+        "type": "ip",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.sampled": {
+      "boolean": {
+        "type": "boolean",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.initiator": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.lag_in_seconds": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.instance.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.kind": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user.email": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.span_count.dropped": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.message.queue.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "numeric_labels": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.user_session_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.node": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "event": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.unapproved_comments": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "source.nat": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "transaction.message.headers": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.variable_segments": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.target.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "destination.ip": {
+      "ip": {
+        "type": "ip",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "observer.hostname": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "url.full.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "url": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.framework.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "event.duration": {
+      "float": {
+        "type": "float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.span_count.started": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.message_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "event.ingested": {
+      "date": {
+        "type": "date",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "@timestamp": {
+      "date": {
+        "type": "date",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_nested_path": {
+      "_nested_path": {
+        "type": "_nested_path",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "data_stream": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.language.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "data_stream.dataset": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "url.domain": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.composite.compression_strategy": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "agent.ephemeral_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "numeric_labels.queue_time_seconds": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.ExecutionVenue": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.tag": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.subscriptionId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "numeric_labels.memory_delta_bytes": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_feature": {
+      "_feature": {
+        "type": "_feature",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.target.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "url.original.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "process.pid": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.availability_zone": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "process.title.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "cloud": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.message.age.ms": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.queue": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "http.request.method": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "kubernetes.namespace": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "http.response": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "user_agent.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "host.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.geo.country_name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "labels.processing_status": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.url": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.entity": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "data_stream.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_tier": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_seq_no": {
+      "_seq_no": {
+        "type": "_seq_no",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "cloud.service.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "observer.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.zoneId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "http.response.headers_sent": {
+      "boolean": {
+        "type": "boolean",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.InstrumentId": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "parent.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_id": {
+      "_id": {
+        "type": "_id",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "process.title": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.representative_count": {
+      "scaled_float": {
+        "type": "scaled_float",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.geo.continent_name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.destination.service.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_index": {
+      "_index": {
+        "type": "_index",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.http_status_code": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.framework.version": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.valuation_request_item_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.key_client": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.trace_headers_present": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "kubernetes.pod.uid": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "trace": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "trace.id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.socket_id": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.duration.us": {
+      "long": {
+        "type": "long",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "client.geo.location": {
+      "geo_point": {
+        "type": "geo_point",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_data_stream_timestamp": {
+      "_data_stream_timestamp": {
+        "type": "_data_stream_timestamp",
+        "metadata_field": true,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "event.success_count": {
+      "byte": {
+        "type": "byte",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "service.target.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.load_mode": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "http.request": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.duration": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "process": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "data_stream.namespace": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.destination": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.runtime.name": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.subtype": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "labels.requestTimeout": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "_index_mode": {
+      "_index_mode": {
+        "type": "_index_mode",
+        "metadata_field": true,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "transaction.message.age": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "user_agent.device.name.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "transaction.type": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.os.full.text": {
+      "text": {
+        "type": "text",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": false
+      }
+    },
+    "labels.request_date": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user_agent.os": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "transaction.span_count": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "service.runtime": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    },
+    "span.destination.service.resource": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "span.db.instance": {
+      "keyword": {
+        "type": "keyword",
+        "metadata_field": false,
+        "searchable": true,
+        "aggregatable": true
+      }
+    },
+    "user": {
+      "object": {
+        "type": "object",
+        "metadata_field": false,
+        "searchable": false,
+        "aggregatable": false
+      }
+    }
+  }
+}
