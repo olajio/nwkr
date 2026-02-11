@@ -1,0 +1,561 @@
+[Container] 2026/02/11 17:18:35.548764 Running on CodeBuild On-demand
+[Container] 2026/02/11 17:18:35.548774 Waiting for agent ping
+[Container] 2026/02/11 17:18:35.750006 Waiting for DOWNLOAD_SOURCE
+[Container] 2026/02/11 17:18:39.665779 Phase is DOWNLOAD_SOURCE
+[Container] 2026/02/11 17:18:39.666726 CODEBUILD_SRC_DIR=/codebuild/output/src1041/src
+[Container] 2026/02/11 17:18:39.666827 CODEBUILD_SRC_DIR_inventory=/codebuild/output/src1041/src/s3/01
+[Container] 2026/02/11 17:18:39.667747 YAML location is /codebuild/readonly/buildspec.yml
+[Container] 2026/02/11 17:18:39.667867 No commands found for phase name: install
+[Container] 2026/02/11 17:18:39.669172 Processing environment variables
+[Container] 2026/02/11 17:18:39.708896 [WARN] Skipping install of runtimes. Runtime version selection is not supported by this build image.
+[Container] 2026/02/11 17:18:39.746553 Moving to directory /codebuild/output/src1041/src
+[Container] 2026/02/11 17:18:39.746569 Cache is not defined in the buildspec
+[Container] 2026/02/11 17:18:39.787154 Skip cache due to: no paths specified to be cached
+[Container] 2026/02/11 17:18:39.787361 Registering with agent
+[Container] 2026/02/11 17:18:39.822981 Phases found in YAML: 3
+[Container] 2026/02/11 17:18:39.822994  INSTALL: 0 commands
+[Container] 2026/02/11 17:18:39.822998  BUILD: 1 commands
+[Container] 2026/02/11 17:18:39.823001  POST_BUILD: 1 commands
+[Container] 2026/02/11 17:18:39.823179 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
+[Container] 2026/02/11 17:18:39.823190 Phase context status code:  Message: 
+[Container] 2026/02/11 17:18:39.978370 Entering phase INSTALL
+[Container] 2026/02/11 17:18:40.065200 Phase complete: INSTALL State: SUCCEEDED
+[Container] 2026/02/11 17:18:40.065220 Phase context status code:  Message: 
+[Container] 2026/02/11 17:18:40.102837 Entering phase PRE_BUILD
+[Container] 2026/02/11 17:18:40.103927 Phase complete: PRE_BUILD State: SUCCEEDED
+[Container] 2026/02/11 17:18:40.103938 Phase context status code:  Message: 
+[Container] 2026/02/11 17:18:40.141890 Entering phase BUILD
+[Container] 2026/02/11 17:18:40.142601 Running command # See the log above for errors!!!
+
+# Define playbook parameters. This is managed by terraform.
+export PLAYBOOK="elastic_agents"
+export ARTIFACTS_BUCKET="hedgeserv-shd-lz-us-east-2-s3-artifacts"
+export ARTIFACTS_BUCKET_KMS="90e626ee-76bd-4c5f-a4ba-a6027ce22b62"
+
+if [[ x != x ]]; then
+    export ENVIRONMENT=""
+fi
+
+printenv | sort | grep -v GITHUB_TOKEN | tee /tmp/env.txt
+
+echo "Set python files in inventory as executable"
+find $CODEBUILD_SRC_DIR_inventory/ -type f -name *.py -exec chmod a+x {} \;
+
+echo "Change dir to /opt/ansible/playbooks/$PLAYBOOK"
+cd /opt/ansible/playbooks/$PLAYBOOK/
+
+bash buildspec.sh
+
+APP_CODE=
+ARTIFACTS_BUCKET=hedgeserv-shd-lz-us-east-2-s3-artifacts
+ARTIFACTS_BUCKET_KMS=90e626ee-76bd-4c5f-a4ba-a6027ce22b62
+AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/v2/credentials/bc71e949-fecb-48d9-8003-37a128f9b472
+AWS_DEFAULT_REGION=us-east-2
+AWS_EXECUTION_ENV=AWS_ECS_EC2
+AWS_REGION=us-east-2
+CHECK_MODE=false
+CODEBUILD_ACTION_RUNNER_URL=https://codefactory-us-east-2-prod-default-build-agent-executor.s3.us-east-2.amazonaws.com/cawsrunner.zip
+CODEBUILD_AGENT_ENDPOINT=http://127.0.0.1:7831
+CODEBUILD_AUTH_TOKEN=587b240c-e021-4632-95f8-f6671c21023d
+CODEBUILD_BMR_URL=https://CODEBUILD_AGENT:3000
+CODEBUILD_BUILD_ARN=arn:aws:codebuild:us-east-2:469620122115:build/core-shd-ansible-us-east-2-playbook-elastic_agents:b7374d95-826a-4efc-91bd-0f529d257d40
+CODEBUILD_BUILD_ID=core-shd-ansible-us-east-2-playbook-elastic_agents:b7374d95-826a-4efc-91bd-0f529d257d40
+CODEBUILD_BUILD_IMAGE=469620122115.dkr.ecr.us-east-2.amazonaws.com/core-shd-ansible-us-east-2-ecr-hs_playbooks:latest
+CODEBUILD_BUILD_NUMBER=7522
+CODEBUILD_BUILD_SUCCEEDING=1
+CODEBUILD_BUILD_URL=https://us-east-2.console.aws.amazon.com/codebuild/home?region=us-east-2#/builds/core-shd-ansible-us-east-2-playbook-elastic_agents:b7374d95-826a-4efc-91bd-0f529d257d40/view/new
+CODEBUILD_CI=true
+CODEBUILD_CONTAINER_NAME=default
+CODEBUILD_CTS_ENDPOINT=https://codebuild-builds.us-east-2.amazonaws.com
+CODEBUILD_EXECUTION_ROLE_BUILD=true
+CODEBUILD_FE_REPORT_ENDPOINT=https://codebuild.us-east-2.amazonaws.com/
+CODEBUILD_GOPATH=/codebuild/output/src1041
+CODEBUILD_INITIATOR=aws_ITSMA/oolajide@hedgeserv.com
+CODEBUILD_KMS_KEY_ID=arn:aws:kms:us-east-2:469620122115:alias/aws/s3
+CODEBUILD_LAST_EXIT=0
+CODEBUILD_LOG_PATH=b7374d95-826a-4efc-91bd-0f529d257d40
+CODEBUILD_PROJECT_ARN=arn:aws:codebuild:us-east-2:469620122115:project/core-shd-ansible-us-east-2-playbook-elastic_agents
+CODEBUILD_PROJECT_UUID=f8eb8aa9-1944-43ae-9108-13c79add1f58
+CODEBUILD_SCRIPT_DIR=/codebuild/output/tmp
+CODEBUILD_SOURCE_REPO_URL_inventory=hedgeserv-shd-ansible-us-east-2-s3-inventory/
+CODEBUILD_SRC_DIR=/codebuild/output/src1041/src
+CODEBUILD_SRC_DIR_inventory=/codebuild/output/src1041/src/s3/01
+CODEBUILD_START_TIME=1770830220577
+CODEBUILD_VPC_AZ=us-east-2a
+CTS_LINK_LOCAL_ADDR=169.254.170.3
+ECS_AGENT_URI=http://169.254.170.2/api/e296bf90-09a3-4b09-a136-445d37507aee
+ECS_CONTAINER_METADATA_URI=http://169.254.170.2/v3/e296bf90-09a3-4b09-a136-445d37507aee
+ECS_CONTAINER_METADATA_URI_V4=http://169.254.170.2/v4/e296bf90-09a3-4b09-a136-445d37507aee
+ELASTIC_ROLE=
+ENVIRONMENT=HST
+EXTRA_VARS=
+FE_REPORT_LINK_LOCAL_ADDR=169.254.170.8
+FORCE_AGENT_RESET=False
+FORKS=30
+GOPATH=/codebuild/output/src1041
+HOME=/root
+HOSTNAME=ip-10-124-253-19.us-east-2.compute.internal
+HSRC=/root/.hsrc
+LIST=ts01-11rl42,TS01-11RL42,ts01-50elk03,TS01-50ELK03,ts01-50jltsm01,TS01-50JLTSM01
+MAVEN_OPTS=-Dmaven.wagon.httpconnectionManager.maxPerRoute=2
+OLDPWD=/codebuild/readonly
+OS=
+PATH=/opt/ansible/bin:/opt/chefdk/bin:/opt/python3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/codebuild/user/bin
+PLAYBOOK=elastic_agents
+PWD=/codebuild/output/src1041/src
+SHLVL=2
+UV_SYSTEM_PYTHON=1
+VERBOSE=false
+_=/usr/bin/printenv
+Set python files in inventory as executable
+Change dir to /opt/ansible/playbooks/elastic_agents
+Successfully configured pip to use AWS CodeArtifact repository https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/ 
+Login expires in 12 hours at 2026-02-12 05:18:41+00:00
+Looking in indexes: https://aws:****@hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/
+Collecting hs-cicd-tools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/hs-cicd-tools/8.74.0/hs_cicd_tools-8.74.0.zip (494 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 494.4/494.4 kB 40.7 MB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting kubernetes==27.2.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/kubernetes/27.2.0/kubernetes-27.2.0-py2.py3-none-any.whl (1.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 108.9 MB/s eta 0:00:00
+Collecting docker==7.1.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/docker/7.1.0/docker-7.1.0-py3-none-any.whl (147 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 57.6 MB/s eta 0:00:00
+Collecting boto3==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/boto3/1.40.61/boto3-1.40.61-py3-none-any.whl (139 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.3/139.3 kB 48.8 MB/s eta 0:00:00
+Collecting botocore==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/botocore/1.40.61/botocore-1.40.61-py3-none-any.whl (14.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 67.6 MB/s eta 0:00:00
+Requirement already satisfied: aws-adfs>=1.24.5 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (2.4.0)
+Collecting boto3-stubs[s3,sqs]==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/boto3-stubs/1.40.61/boto3_stubs-1.40.61-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.1/69.1 kB 28.0 MB/s eta 0:00:00
+Collecting mypy-boto3==1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3/1.40.0/mypy_boto3-1.40.0-py3-none-any.whl (22 kB)
+Collecting requests>=2.32.3
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests/2.32.5/requests-2.32.5-py3-none-any.whl (64 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.7/64.7 kB 26.6 MB/s eta 0:00:00
+Collecting PyGithub==1.55
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pygithub/1.55/PyGithub-1.55-py3-none-any.whl (291 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 291.7/291.7 kB 81.9 MB/s eta 0:00:00
+Requirement already satisfied: pyyaml>=5.3.1 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (6.0.3)
+Collecting yamlcore==0.0.4
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/yamlcore/0.0.4/yamlcore-0.0.4-py3-none-any.whl (6.0 kB)
+Requirement already satisfied: jinja2>=1.2 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (3.1.2)
+Collecting retry==0.9.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/retry/0.9.2/retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
+Collecting croniter==1.3.8
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/croniter/1.3.8/croniter-1.3.8-py2.py3-none-any.whl (18 kB)
+Collecting deepdiff==6.3.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/deepdiff/6.3.0/deepdiff-6.3.0-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.7/69.7 kB 31.1 MB/s eta 0:00:00
+Collecting twine==5.0.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/twine/5.0.0/twine-5.0.0-py3-none-any.whl (37 kB)
+Requirement already satisfied: tzdata>=2022.2 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (2025.3)
+Collecting pytz>=2024.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pytz/2025.2/pytz-2025.2-py2.py3-none-any.whl (509 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 106.9 MB/s eta 0:00:00
+Collecting atlassian-python-api==3.41.11
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/atlassian-python-api/3.41.11/atlassian_python_api-3.41.11-py3-none-any.whl (173 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 173.3/173.3 kB 62.3 MB/s eta 0:00:00
+Collecting openpyxl==3.1.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/openpyxl/3.1.2/openpyxl-3.1.2-py2.py3-none-any.whl (249 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.0/250.0 kB 71.9 MB/s eta 0:00:00
+Collecting ruamel.yaml==0.18.10
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/ruamel-yaml/0.18.10/ruamel.yaml-0.18.10-py3-none-any.whl (117 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.7/117.7 kB 49.3 MB/s eta 0:00:00
+Collecting greenlet==3.2.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/greenlet/3.2.2/greenlet-3.2.2-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (580 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 580.6/580.6 kB 94.4 MB/s eta 0:00:00
+Collecting deprecated
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/deprecated/1.3.1/deprecated-1.3.1-py2.py3-none-any.whl (11 kB)
+Collecting requests-oauthlib
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests-oauthlib/2.0.0/requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Requirement already satisfied: six in /opt/ansible/lib/python3.10/site-packages (from atlassian-python-api==3.41.11->hs-cicd-tools) (1.17.0)
+Collecting oauthlib
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/oauthlib/3.3.1/oauthlib-3.3.1-py3-none-any.whl (160 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 160.1/160.1 kB 59.5 MB/s eta 0:00:00
+Collecting beautifulsoup4
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/beautifulsoup4/4.14.3/beautifulsoup4-4.14.3-py3-none-any.whl (107 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.7/107.7 kB 42.7 MB/s eta 0:00:00
+Requirement already satisfied: jmespath in /opt/ansible/lib/python3.10/site-packages (from atlassian-python-api==3.41.11->hs-cicd-tools) (1.0.1)
+Collecting s3transfer<0.15.0,>=0.14.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/s3transfer/0.14.0/s3transfer-0.14.0-py3-none-any.whl (85 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.7/85.7 kB 38.3 MB/s eta 0:00:00
+Collecting botocore-stubs
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/botocore-stubs/1.42.41/botocore_stubs-1.42.41-py3-none-any.whl (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 28.5 MB/s eta 0:00:00
+Collecting types-s3transfer
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/types-s3transfer/0.16.0/types_s3transfer-0.16.0-py3-none-any.whl (19 kB)
+Requirement already satisfied: typing-extensions>=4.1.0 in /opt/ansible/lib/python3.10/site-packages (from boto3-stubs[s3,sqs]==1.40.61->hs-cicd-tools) (4.15.0)
+Collecting mypy-boto3-sqs<1.41.0,>=1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3-sqs/1.40.61/mypy_boto3_sqs-1.40.61-py3-none-any.whl (33 kB)
+Collecting mypy-boto3-s3<1.41.0,>=1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3-s3/1.40.61/mypy_boto3_s3-1.40.61-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.8/82.8 kB 36.5 MB/s eta 0:00:00
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/ansible/lib/python3.10/site-packages (from botocore==1.40.61->hs-cicd-tools) (1.26.20)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in /opt/ansible/lib/python3.10/site-packages (from botocore==1.40.61->hs-cicd-tools) (2.8.2)
+Collecting ordered-set<4.2.0,>=4.0.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/ordered-set/4.1.0/ordered_set-4.1.0-py3-none-any.whl (7.6 kB)
+Collecting websocket-client!=0.40.0,!=0.41.*,!=0.42.*,>=0.32.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/websocket-client/1.9.0/websocket_client-1.9.0-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.6/82.6 kB 34.6 MB/s eta 0:00:00
+Collecting google-auth>=1.0.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/google-auth/2.48.0/google_auth-2.48.0-py3-none-any.whl (236 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 236.5/236.5 kB 60.6 MB/s eta 0:00:00
+Requirement already satisfied: certifi>=14.05.14 in /opt/ansible/lib/python3.10/site-packages (from kubernetes==27.2.0->hs-cicd-tools) (2026.1.4)
+Collecting et-xmlfile
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/et-xmlfile/2.0.0/et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Collecting pynacl>=1.4.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pynacl/1.6.2/pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl (1.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 113.7 MB/s eta 0:00:00
+Collecting pyjwt>=2.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pyjwt/2.11.0/pyjwt-2.11.0-py3-none-any.whl (28 kB)
+Requirement already satisfied: decorator>=3.4.2 in /opt/ansible/lib/python3.10/site-packages (from retry==0.9.2->hs-cicd-tools) (5.2.1)
+Collecting py<2.0.0,>=1.4.26
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/py/1.11.0/py-1.11.0-py2.py3-none-any.whl (98 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 39.1 MB/s eta 0:00:00
+Requirement already satisfied: ruamel.yaml.clib>=0.2.7 in /opt/ansible/lib/python3.10/site-packages (from ruamel.yaml==0.18.10->hs-cicd-tools) (0.2.15)
+Collecting importlib-metadata>=3.6
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/importlib-metadata/8.7.1/importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Collecting readme-renderer>=35.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/readme-renderer/44.0/readme_renderer-44.0-py3-none-any.whl (13 kB)
+Requirement already satisfied: rich>=12.0.0 in /opt/ansible/lib/python3.10/site-packages (from twine==5.0.0->hs-cicd-tools) (14.2.0)
+Collecting pkginfo>=1.8.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pkginfo/1.12.1.2/pkginfo-1.12.1.2-py3-none-any.whl (32 kB)
+Collecting keyring>=15.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/keyring/25.7.0/keyring-25.7.0-py3-none-any.whl (39 kB)
+Requirement already satisfied: rfc3986>=1.4.0 in /opt/ansible/lib/python3.10/site-packages (from twine==5.0.0->hs-cicd-tools) (2.0.0)
+Collecting requests-toolbelt!=0.9.0,>=0.8.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests-toolbelt/1.0.0/requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 22.9 MB/s eta 0:00:00
+Requirement already satisfied: requests-kerberos<0.15,>=0.14 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (0.14.0)
+Requirement already satisfied: fido2<2.0,>=1.0 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (1.2.0)
+Requirement already satisfied: click<9.0,>=8.0 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (8.3.1)
+Requirement already satisfied: configparser==5.2 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (5.2.0)
+Requirement already satisfied: lxml<5.0,>=4.9 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (4.9.4)
+Requirement already satisfied: MarkupSafe>=2.0 in /opt/ansible/lib/python3.10/site-packages (from jinja2>=1.2->hs-cicd-tools) (3.0.3)
+Requirement already satisfied: idna<4,>=2.5 in /opt/ansible/lib/python3.10/site-packages (from requests>=2.32.3->hs-cicd-tools) (3.11)
+Requirement already satisfied: charset_normalizer<4,>=2 in /opt/ansible/lib/python3.10/site-packages (from requests>=2.32.3->hs-cicd-tools) (2.1.1)
+Requirement already satisfied: cryptography!=35,<45,>=2.6 in /opt/ansible/lib/python3.10/site-packages (from fido2<2.0,>=1.0->aws-adfs>=1.24.5->hs-cicd-tools) (38.0.4)
+Collecting pyasn1-modules>=0.2.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pyasn1-modules/0.4.2/pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 61.8 MB/s eta 0:00:00
+Requirement already satisfied: rsa<5,>=3.1.4 in /opt/ansible/lib/python3.10/site-packages (from google-auth>=1.0.1->kubernetes==27.2.0->hs-cicd-tools) (4.7.2)
+Collecting zipp>=3.20
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/zipp/3.23.0/zipp-3.23.0-py3-none-any.whl (10 kB)
+Collecting jeepney>=0.4.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jeepney/0.9.0/jeepney-0.9.0-py3-none-any.whl (49 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 49.0/49.0 kB 20.6 MB/s eta 0:00:00
+Collecting jaraco.functools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-functools/4.4.0/jaraco_functools-4.4.0-py3-none-any.whl (10 kB)
+Collecting SecretStorage>=3.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/secretstorage/3.5.0/secretstorage-3.5.0-py3-none-any.whl (15 kB)
+Collecting jaraco.classes
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-classes/3.4.0/jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+Collecting jaraco.context
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-context/6.1.0/jaraco_context-6.1.0-py3-none-any.whl (7.1 kB)
+Requirement already satisfied: cffi>=2.0.0 in /opt/ansible/lib/python3.10/site-packages (from pynacl>=1.4.0->PyGithub==1.55->hs-cicd-tools) (2.0.0)
+Collecting docutils>=0.21.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/docutils/0.22.4/docutils-0.22.4-py3-none-any.whl (633 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 633.2/633.2 kB 95.7 MB/s eta 0:00:00
+Collecting nh3>=0.2.14
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/nh3/0.3.2/nh3-0.3.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (797 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 797.2/797.2 kB 114.7 MB/s eta 0:00:00
+Requirement already satisfied: Pygments>=2.5.1 in /opt/ansible/lib/python3.10/site-packages (from readme-renderer>=35.0->twine==5.0.0->hs-cicd-tools) (2.19.2)
+Requirement already satisfied: pyspnego[kerberos] in /opt/ansible/lib/python3.10/site-packages (from requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (0.12.0)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /opt/ansible/lib/python3.10/site-packages (from rich>=12.0.0->twine==5.0.0->hs-cicd-tools) (4.0.0)
+Collecting soupsieve>=1.6.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/soupsieve/2.8.3/soupsieve-2.8.3-py3-none-any.whl (37 kB)
+Collecting types-awscrt
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/types-awscrt/0.31.1/types_awscrt-0.31.1-py3-none-any.whl (42 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.5/42.5 kB 18.4 MB/s eta 0:00:00
+Requirement already satisfied: wrapt<3,>=1.10 in /opt/ansible/lib/python3.10/site-packages (from deprecated->atlassian-python-api==3.41.11->hs-cicd-tools) (2.0.1)
+Requirement already satisfied: pycparser in /opt/ansible/lib/python3.10/site-packages (from cffi>=2.0.0->pynacl>=1.4.0->PyGithub==1.55->hs-cicd-tools) (2.23)
+Requirement already satisfied: mdurl~=0.1 in /opt/ansible/lib/python3.10/site-packages (from markdown-it-py>=2.2.0->rich>=12.0.0->twine==5.0.0->hs-cicd-tools) (0.1.2)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in /opt/ansible/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth>=1.0.1->kubernetes==27.2.0->hs-cicd-tools) (0.6.2)
+Collecting more-itertools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/more-itertools/10.8.0/more_itertools-10.8.0-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.7/69.7 kB 30.2 MB/s eta 0:00:00
+Collecting backports.tarfile
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/backports-tarfile/1.2.0/backports.tarfile-1.2.0-py3-none-any.whl (30 kB)
+Requirement already satisfied: gssapi>=1.6.0 in /opt/ansible/lib/python3.10/site-packages (from pyspnego[kerberos]->requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (1.10.1)
+Requirement already satisfied: krb5>=0.3.0 in /opt/ansible/lib/python3.10/site-packages (from pyspnego[kerberos]->requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (0.9.0)
+Building wheels for collected packages: hs-cicd-tools
+  Building wheel for hs-cicd-tools (setup.py): started
+  Building wheel for hs-cicd-tools (setup.py): finished with status 'done'
+  Created wheel for hs-cicd-tools: filename=hs_cicd_tools-8.74.0-py3-none-any.whl size=500834 sha256=723963c562a3ea7b84d0fde1b10c217e255dc220dca0c4398c9ecaf8501454d2
+  Stored in directory: /root/.cache/pip/wheels/61/e5/c2/e3eb8090217ca7adc5aed4effe3a7e7c019c0f71029cb136e0
+Successfully built hs-cicd-tools
+Installing collected packages: pytz, zipp, yamlcore, websocket-client, types-s3transfer, types-awscrt, soupsieve, ruamel.yaml, requests, pyjwt, pyasn1-modules, py, pkginfo, ordered-set, oauthlib, nh3, mypy-boto3-sqs, mypy-boto3-s3, more-itertools, jeepney, greenlet, et-xmlfile, docutils, deprecated, backports.tarfile, retry, requests-toolbelt, requests-oauthlib, readme-renderer, pynacl, openpyxl, jaraco.functools, jaraco.context, jaraco.classes, importlib-metadata, docker, deepdiff, croniter, botocore-stubs, botocore, beautifulsoup4, SecretStorage, s3transfer, PyGithub, google-auth, boto3-stubs, atlassian-python-api, kubernetes, keyring, boto3, twine, mypy-boto3, hs-cicd-tools
+  Attempting uninstall: ruamel.yaml
+    Found existing installation: ruamel.yaml 0.17.40
+    Uninstalling ruamel.yaml-0.17.40:
+      Successfully uninstalled ruamel.yaml-0.17.40
+  Attempting uninstall: requests
+    Found existing installation: requests 2.28.1
+    Uninstalling requests-2.28.1:
+      Successfully uninstalled requests-2.28.1
+  Attempting uninstall: docutils
+    Found existing installation: docutils 0.19
+    Uninstalling docutils-0.19:
+      Successfully uninstalled docutils-0.19
+  Attempting uninstall: botocore
+    Found existing installation: botocore 1.42.30
+    Uninstalling botocore-1.42.30:
+      Successfully uninstalled botocore-1.42.30
+  Attempting uninstall: s3transfer
+    Found existing installation: s3transfer 0.16.0
+    Uninstalling s3transfer-0.16.0:
+      Successfully uninstalled s3transfer-0.16.0
+  Attempting uninstall: boto3
+    Found existing installation: boto3 1.42.30
+    Uninstalling boto3-1.42.30:
+      Successfully uninstalled boto3-1.42.30
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+solidfire-sdk-python 12.3.0.203 requires enum34>=1.1.6, which is not installed.
+awscli 1.44.20 requires botocore==1.42.30, but you have botocore 1.40.61 which is incompatible.
+awscli 1.44.20 requires docutils<=0.19,>=0.18.1, but you have docutils 0.22.4 which is incompatible.
+awscli 1.44.20 requires s3transfer<0.17.0,>=0.16.0, but you have s3transfer 0.14.0 which is incompatible.
+ansible-lint 6.9.1 requires ruamel.yaml<0.18,>=0.17.21, but you have ruamel-yaml 0.18.10 which is incompatible.
+Successfully installed PyGithub-1.55 SecretStorage-3.5.0 atlassian-python-api-3.41.11 backports.tarfile-1.2.0 beautifulsoup4-4.14.3 boto3-1.40.61 boto3-stubs-1.40.61 botocore-1.40.61 botocore-stubs-1.42.41 croniter-1.3.8 deepdiff-6.3.0 deprecated-1.3.1 docker-7.1.0 docutils-0.22.4 et-xmlfile-2.0.0 google-auth-2.48.0 greenlet-3.2.2 hs-cicd-tools-8.74.0 importlib-metadata-8.7.1 jaraco.classes-3.4.0 jaraco.context-6.1.0 jaraco.functools-4.4.0 jeepney-0.9.0 keyring-25.7.0 kubernetes-27.2.0 more-itertools-10.8.0 mypy-boto3-1.40.0 mypy-boto3-s3-1.40.61 mypy-boto3-sqs-1.40.61 nh3-0.3.2 oauthlib-3.3.1 openpyxl-3.1.2 ordered-set-4.1.0 pkginfo-1.12.1.2 py-1.11.0 pyasn1-modules-0.4.2 pyjwt-2.11.0 pynacl-1.6.2 pytz-2025.2 readme-renderer-44.0 requests-2.32.5 requests-oauthlib-2.0.0 requests-toolbelt-1.0.0 retry-0.9.2 ruamel.yaml-0.18.10 s3transfer-0.14.0 soupsieve-2.8.3 twine-5.0.0 types-awscrt-0.31.1 types-s3transfer-0.16.0 websocket-client-1.9.0 yamlcore-0.0.4 zipp-3.23.0
+
+[notice] A new release of pip is available: 23.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+Call common buildspec
+Set trap for report upload
+Parse parameters
+Setup boto credentials
+AWS creds will expire at: 2026-02-11T18:17:42Z
+'/codebuild/output/src1041/src/s3/01/environment_automation.py' -> '/codebuild/output/src1041/src/s3/01/HST/'
+cp: cannot create regular file '/codebuild/output/src1041/src/s3/01/HST/': Not a directory
+We are running the onprem role
+Execute: ansible-playbook elastic_agents.yml -i /codebuild/output/src1041/src/s3/01/hst/environment_automation.py -l ts01-11rl42,TS01-11RL42,ts01-50elk03,TS01-50ELK03,ts01-50jltsm01,TS01-50JLTSM01 
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+[WARNING]: Could not match supplied host pattern, ignoring: TS01-11RL42
+[WARNING]: Could not match supplied host pattern, ignoring: TS01-50ELK03
+[WARNING]: Could not match supplied host pattern, ignoring: TS01-50JLTSM01
+
+PLAY [Install Elastic Agents] **************************************************
+
+TASK [Set ntlm on winRM connection if OS is ste to ntlm_enabled] ***************
+skipping: [ts01-50elk03]
+skipping: [ts01-50jltsm01]
+skipping: [ts01-11rl42]
+
+TASK [Get role from env] *******************************************************
+ok: [ts01-50elk03]
+ok: [ts01-50jltsm01]
+ok: [ts01-11rl42]
+
+TASK [Test connection] *********************************************************
+ok: [ts01-50elk03]
+fatal: [ts01-50jltsm01]: FAILED! => {"changed": false, "elapsed": 5, "msg": "timed out waiting for ping module test: Invalid/incorrect password: Permission denied, please try again."}
+ok: [ts01-11rl42]
+
+TASK [Set host domain] *********************************************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [Load hs_role_elastic_agents] *********************************************
+
+TASK [hs_role_elastic_agents : Set consul_var] *********************************
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+ok: [ts01-50elk03] => {
+    "msg": [
+        "consul_host_key -> consul_uat"
+    ]
+}
+ok: [ts01-11rl42] => {
+    "msg": [
+        "consul_host_key -> consul_uat"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set consul_env] *********************************
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+ok: [ts01-50elk03] => {
+    "msg": [
+        "csl_env -> {'env_path': 'uat'}"
+    ]
+}
+ok: [ts01-11rl42] => {
+    "msg": [
+        "csl_env -> {'env_path': 'uat'}"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set elasticsearch_var] **************************
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+ok: [ts01-50elk03] => {
+    "msg": [
+        "elasticsearch -> {'cluster': {'uuid': 'mXqbzwdKSvSeNAJ1lM5oIw', 'name': 'qa'}, 'endpoint': 'https://hselkqa.hedgeserv.net:9243', 'monitoring': 'https://hselkmon.hedgeserv.net:9243'}"
+    ]
+}
+ok: [ts01-11rl42] => {
+    "msg": [
+        "elasticsearch -> {'cluster': {'uuid': 'mXqbzwdKSvSeNAJ1lM5oIw', 'name': 'qa'}, 'endpoint': 'https://hselkqa.hedgeserv.net:9243', 'monitoring': 'https://hselkmon.hedgeserv.net:9243'}"
+    ]
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+ok: [ts01-50elk03] => {
+    "msg": [
+        "env -> UAT"
+    ]
+}
+ok: [ts01-11rl42] => {
+    "msg": [
+        "env -> UAT"
+    ]
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+ok: [ts01-50elk03] => {
+    "msg": [
+        "environment_code -> ELKUAT"
+    ]
+}
+ok: [ts01-11rl42] => {
+    "msg": [
+        "environment_code -> REDIS"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set Version of Role] ****************************
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Include app code vars] **************************
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Install Filebeat] *******************************
+included: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml for ts01-50elk03, ts01-11rl42 => (item=install-filebeat.yml)
+included: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/config-filebeat.yml for ts01-50elk03, ts01-11rl42 => (item=config-filebeat.yml)
+
+TASK [hs_role_elastic_agents : Check version of filebeat] **********************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Remove filebeat service] ************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Creating temp\beats Path] ***********************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Download filebeat from S3 Generic Artifacts] ****
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Unzip Filebeat] *********************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Move filebeat folder under Program Files] *******
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Configure and Enable ELK Repo] ******************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Configure and Enable hs_internal_rpm Repo] ******
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Check filebeat version] *************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Remove old filebeat] ****************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Install filebeat] *******************************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Enable service filebeat on boot] ****************
+skipping: [ts01-50elk03]
+skipping: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Configure and Enable ELK Repo] ******************
+changed: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Configure and Enable hs_internal_rpm Repo] ******
+ok: [ts01-50elk03]
+ok: [ts01-11rl42]
+
+TASK [hs_role_elastic_agents : Check filebeat version] *************************
+fatal: [ts01-11rl42]: FAILED! => {"changed": false, "cmd": "/usr/share/filebeat/bin/filebeat version", "msg": "[Errno 2] No such file or directory", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+...ignoring
+ok: [ts01-50elk03]
+
+TASK [hs_role_elastic_agents : Remove old filebeat] ****************************
+skipping: [ts01-11rl42]
+changed: [ts01-50elk03]
+
+TASK [hs_role_elastic_agents : Install filebeat] *******************************
+fatal: [ts01-50elk03]: FAILED! => {"changed": false, "msg": "Error from repoquery: ['/bin/repoquery', '--show-duplicates', '--plugins', '--quiet', '--disablerepo', '', '--enablerepo', '', '--qf', '%{epoch}:%{name}-%{version}-%{release}.%{arch}', 'filebeat-8.19.4']: There was an error communicating with RHN.\nRed Hat Satellite or RHN Classic support will be disabled.\nrhn-plugin: Error communicating with server. The message was:\nUnable to connect to the host and port specified\nfailure: repodata/repomd.xml from CentOS-7-Base: [Errno 256] No more mirrors to try.\nhttps://artifactory.hedgeserv.net/artifactory/CentOS-7-Base/repodata/repomd.xml: [Errno 14] curl#6 - \"Could not resolve host: artifactory.hedgeserv.net; Unknown error\"\nThere was an error communicating with RHN.\nRed Hat Satellite or RHN Classic support will be disabled.\nrhn-plugin: Error communicating with server. The message was:\nUnable to connect to the host and port specified\nCould not match packages: failure: repodata/repomd.xml from CentOS-7-Base: [Errno 256] No more mirrors to try.\nhttps://artifactory.hedgeserv.net/artifactory/CentOS-7-Base/repodata/repomd.xml: [Errno 14] curl#6 - \"Could not resolve host: artifactory.hedgeserv.net; Unknown error\"\n"}
+fatal: [ts01-11rl42]: FAILED! => {"ansible_facts": {"pkg_mgr": "yum"}, "changed": false, "msg": "Error from repoquery: ['/bin/repoquery', '--show-duplicates', '--plugins', '--quiet', '--disablerepo', '', '--enablerepo', '', '--qf', '%{epoch}:%{name}-%{version}-%{release}.%{arch}', 'filebeat-8.19.4']: There was an error communicating with RHN.\nRed Hat Satellite or RHN Classic support will be disabled.\nrhn-plugin: Error communicating with server. The message was:\nUnable to connect to the host and port specified\nfailure: repodata/repomd.xml from CentOS-7-Base: [Errno 256] No more mirrors to try.\nhttps://artifactory.hedgeserv.net/artifactory/CentOS-7-Base/repodata/repomd.xml: [Errno 14] curl#6 - \"Could not resolve host: artifactory.hedgeserv.net; Unknown error\"\nThere was an error communicating with RHN.\nRed Hat Satellite or RHN Classic support will be disabled.\nrhn-plugin: Error communicating with server. The message was:\nUnable to connect to the host and port specified\nCould not match packages: failure: repodata/repomd.xml from CentOS-7-Base: [Errno 256] No more mirrors to try.\nhttps://artifactory.hedgeserv.net/artifactory/CentOS-7-Base/repodata/repomd.xml: [Errno 14] curl#6 - \"Could not resolve host: artifactory.hedgeserv.net; Unknown error\"\n"}
+
+PLAY RECAP *********************************************************************
+ts01-11rl42                : ok=17   changed=0    unreachable=0    failed=1    skipped=15   rescued=0    ignored=1   
+ts01-50elk03               : ok=18   changed=2    unreachable=0    failed=1    skipped=14   rescued=0    ignored=0   
+ts01-50jltsm01             : ok=1    changed=0    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+
+JSON Report generated in report.json
+HTML Report generated in report.html
+Playbook run took 0 days, 0 hours, 11 minutes, 17 seconds
+Execute: Wait 40s ...
+Execute: python3 host_validation/check_host_list.py
+
+
+------------------HOST VALIDATION START------------------
+Getting elastic "onprem_provisioning/elastic_agents/install_verification" API key from Secret Manager in us-east-2 from account 469620122115.
+Getting ansible inventory list for METRICBEAT... 
+Issue with host_file.txt - [Errno 2] No such file or directory: './metricbeat_hosts.txt'
+AWS creds will expire at: 2026-02-11T18:17:42Z
+Upload report to s3 bucket 'hedgeserv-shd-lz-us-east-2-s3-artifacts'
+Completed 90.4 KiB/90.4 KiB (839.4 KiB/s) with 1 file(s) remaining
+upload: ../../../../tmp/report.json to s3://hedgeserv-shd-lz-us-east-2-s3-artifacts//report.json
+Completed 212.6 KiB/212.6 KiB (2.2 MiB/s) with 1 file(s) remaining
+upload: ../../../../tmp/report.html to s3://hedgeserv-shd-lz-us-east-2-s3-artifacts//report.html
+https://s3.console.aws.amazon.com/s3/buckets/hedgeserv-shd-lz-us-east-2-s3-artifacts?region=us-east-2&prefix=/&showversions=false
+
+[Container] 2026/02/11 17:31:15.301246 Phase complete: BUILD State: SUCCEEDED
+[Container] 2026/02/11 17:31:15.301267 Phase context status code:  Message: 
+[Container] 2026/02/11 17:31:15.391039 Entering phase POST_BUILD
+[Container] 2026/02/11 17:31:15.391793 Running command echo "Ansible execution completed on `date`"
+Ansible execution completed on Wed Feb 11 17:31:15 UTC 2026
+
+[Container] 2026/02/11 17:31:15.399760 Phase complete: POST_BUILD State: SUCCEEDED
+[Container] 2026/02/11 17:31:15.399774 Phase context status code:  Message: 
+[Container] 2026/02/11 17:31:15.495543 Set report auto-discover timeout to 5 seconds
+[Container] 2026/02/11 17:31:15.495578 Expanding base directory path:  .
+[Container] 2026/02/11 17:31:15.497835 Assembling file list
+[Container] 2026/02/11 17:31:15.497843 Expanding .
+[Container] 2026/02/11 17:31:15.499971 Expanding file paths for base directory .
+[Container] 2026/02/11 17:31:15.499977 Assembling file list
+[Container] 2026/02/11 17:31:15.499978 Expanding **/*
+[Container] 2026/02/11 17:31:15.502795 No matching auto-discover report paths found
+[Container] 2026/02/11 17:31:15.502818 Report auto-discover file discovery took 0.007275 seconds
+[Container] 2026/02/11 17:31:15.502830 Phase complete: UPLOAD_ARTIFACTS State: SUCCEEDED
+[Container] 2026/02/11 17:31:15.502836 Phase context status code:  Message: 
