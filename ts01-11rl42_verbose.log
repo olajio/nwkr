@@ -1,0 +1,1148 @@
+[Container] 2026/02/12 18:39:38.631636 Running on CodeBuild On-demand
+[Container] 2026/02/12 18:39:38.631647 Waiting for agent ping
+[Container] 2026/02/12 18:39:40.941719 Waiting for DOWNLOAD_SOURCE
+[Container] 2026/02/12 18:39:44.596620 Phase is DOWNLOAD_SOURCE
+[Container] 2026/02/12 18:39:44.597560 CODEBUILD_SRC_DIR=/codebuild/output/src643/src
+[Container] 2026/02/12 18:39:44.597638 CODEBUILD_SRC_DIR_inventory=/codebuild/output/src643/src/s3/01
+[Container] 2026/02/12 18:39:44.598569 YAML location is /codebuild/readonly/buildspec.yml
+[Container] 2026/02/12 18:39:44.598685 No commands found for phase name: install
+[Container] 2026/02/12 18:39:44.600033 Processing environment variables
+[Container] 2026/02/12 18:39:44.640025 [WARN] Skipping install of runtimes. Runtime version selection is not supported by this build image.
+[Container] 2026/02/12 18:39:44.679097 Moving to directory /codebuild/output/src643/src
+[Container] 2026/02/12 18:39:44.679118 Cache is not defined in the buildspec
+[Container] 2026/02/12 18:39:44.715339 Skip cache due to: no paths specified to be cached
+[Container] 2026/02/12 18:39:44.715580 Registering with agent
+[Container] 2026/02/12 18:39:44.748735 Phases found in YAML: 3
+[Container] 2026/02/12 18:39:44.748765  INSTALL: 0 commands
+[Container] 2026/02/12 18:39:44.748770  BUILD: 1 commands
+[Container] 2026/02/12 18:39:44.748773  POST_BUILD: 1 commands
+[Container] 2026/02/12 18:39:44.749028 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
+[Container] 2026/02/12 18:39:44.749042 Phase context status code:  Message: 
+[Container] 2026/02/12 18:39:44.850665 Entering phase INSTALL
+[Container] 2026/02/12 18:39:44.918403 Phase complete: INSTALL State: SUCCEEDED
+[Container] 2026/02/12 18:39:44.918435 Phase context status code:  Message: 
+[Container] 2026/02/12 18:39:44.953046 Entering phase PRE_BUILD
+[Container] 2026/02/12 18:39:44.954369 Phase complete: PRE_BUILD State: SUCCEEDED
+[Container] 2026/02/12 18:39:44.954389 Phase context status code:  Message: 
+[Container] 2026/02/12 18:39:44.987492 Entering phase BUILD
+[Container] 2026/02/12 18:39:44.988278 Running command # See the log above for errors!!!
+
+# Define playbook parameters. This is managed by terraform.
+export PLAYBOOK="elastic_agents"
+export ARTIFACTS_BUCKET="hedgeserv-shd-lz-us-east-2-s3-artifacts"
+export ARTIFACTS_BUCKET_KMS="90e626ee-76bd-4c5f-a4ba-a6027ce22b62"
+
+if [[ x != x ]]; then
+    export ENVIRONMENT=""
+fi
+
+printenv | sort | grep -v GITHUB_TOKEN | tee /tmp/env.txt
+
+echo "Set python files in inventory as executable"
+find $CODEBUILD_SRC_DIR_inventory/ -type f -name *.py -exec chmod a+x {} \;
+
+echo "Change dir to /opt/ansible/playbooks/$PLAYBOOK"
+cd /opt/ansible/playbooks/$PLAYBOOK/
+
+bash buildspec.sh
+
+APP_CODE=
+ARTIFACTS_BUCKET=hedgeserv-shd-lz-us-east-2-s3-artifacts
+ARTIFACTS_BUCKET_KMS=90e626ee-76bd-4c5f-a4ba-a6027ce22b62
+AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/v2/credentials/fab44376-ae41-4d4a-898b-0e7c13acf026
+AWS_DEFAULT_REGION=us-east-2
+AWS_EXECUTION_ENV=AWS_ECS_EC2
+AWS_REGION=us-east-2
+CHECK_MODE=false
+CODEBUILD_ACTION_RUNNER_URL=https://codefactory-us-east-2-prod-default-build-agent-executor.s3.us-east-2.amazonaws.com/cawsrunner.zip
+CODEBUILD_AGENT_ENDPOINT=http://127.0.0.1:7831
+CODEBUILD_AUTH_TOKEN=c49c751a-63fd-4fd0-9f11-21f25ba7f989
+CODEBUILD_BMR_URL=https://CODEBUILD_AGENT:3000
+CODEBUILD_BUILD_ARN=arn:aws:codebuild:us-east-2:469620122115:build/core-shd-ansible-us-east-2-playbook-elastic_agents:457704a6-bea3-4b06-aaae-e31ba1427bf9
+CODEBUILD_BUILD_ID=core-shd-ansible-us-east-2-playbook-elastic_agents:457704a6-bea3-4b06-aaae-e31ba1427bf9
+CODEBUILD_BUILD_IMAGE=469620122115.dkr.ecr.us-east-2.amazonaws.com/core-shd-ansible-us-east-2-ecr-hs_playbooks:latest
+CODEBUILD_BUILD_NUMBER=7529
+CODEBUILD_BUILD_SUCCEEDING=1
+CODEBUILD_BUILD_URL=https://us-east-2.console.aws.amazon.com/codebuild/home?region=us-east-2#/builds/core-shd-ansible-us-east-2-playbook-elastic_agents:457704a6-bea3-4b06-aaae-e31ba1427bf9/view/new
+CODEBUILD_CI=true
+CODEBUILD_CONFIG_AUTO_DISCOVER=true
+CODEBUILD_CONTAINER_NAME=default
+CODEBUILD_CTS_ENDPOINT=https://codebuild-builds.us-east-2.amazonaws.com
+CODEBUILD_EXECUTION_ROLE_BUILD=true
+CODEBUILD_FE_REPORT_ENDPOINT=https://codebuild.us-east-2.amazonaws.com/
+CODEBUILD_GOPATH=/codebuild/output/src643
+CODEBUILD_INITIATOR=aws_ITSMA/oolajide@hedgeserv.com
+CODEBUILD_KMS_KEY_ID=arn:aws:kms:us-east-2:469620122115:alias/aws/s3
+CODEBUILD_LAST_EXIT=0
+CODEBUILD_LOG_PATH=457704a6-bea3-4b06-aaae-e31ba1427bf9
+CODEBUILD_PROJECT_ARN=arn:aws:codebuild:us-east-2:469620122115:project/core-shd-ansible-us-east-2-playbook-elastic_agents
+CODEBUILD_PROJECT_UUID=f8eb8aa9-1944-43ae-9108-13c79add1f58
+CODEBUILD_SCRIPT_DIR=/codebuild/output/tmp
+CODEBUILD_SOURCE_REPO_URL_inventory=hedgeserv-shd-ansible-us-east-2-s3-inventory/
+CODEBUILD_SOURCE_VERSION_inventory=
+CODEBUILD_SRC_DIR=/codebuild/output/src643/src
+CODEBUILD_SRC_DIR_inventory=/codebuild/output/src643/src/s3/01
+CODEBUILD_START_TIME=1770921512153
+CODEBUILD_VPC_AZ=us-east-2b
+CTS_LINK_LOCAL_ADDR=169.254.170.3
+ECS_AGENT_URI=http://169.254.170.2/api/fc5dbcd2-c75a-4382-b258-eae3c2e0a980
+ECS_CONTAINER_METADATA_URI=http://169.254.170.2/v3/fc5dbcd2-c75a-4382-b258-eae3c2e0a980
+ECS_CONTAINER_METADATA_URI_V4=http://169.254.170.2/v4/fc5dbcd2-c75a-4382-b258-eae3c2e0a980
+ELASTIC_ROLE=
+ENVIRONMENT=HST
+EXTRA_VARS=-vvv
+FE_REPORT_LINK_LOCAL_ADDR=169.254.170.8
+FORCE_AGENT_RESET=False
+FORKS=30
+GOPATH=/codebuild/output/src643
+HOME=/root
+HOSTNAME=ip-10-124-253-72.us-east-2.compute.internal
+HSRC=/root/.hsrc
+LIST=ts01-11rl42
+MAVEN_OPTS=-Dmaven.wagon.httpconnectionManager.maxPerRoute=2
+OLDPWD=/codebuild/readonly
+OS=
+PATH=/opt/ansible/bin:/opt/chefdk/bin:/opt/python3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/codebuild/user/bin
+PLAYBOOK=elastic_agents
+PWD=/codebuild/output/src643/src
+SHLVL=2
+UV_SYSTEM_PYTHON=1
+VERBOSE=false
+_=/usr/bin/printenv
+Set python files in inventory as executable
+Change dir to /opt/ansible/playbooks/elastic_agents
+Successfully configured pip to use AWS CodeArtifact repository https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/ 
+Login expires in 12 hours at 2026-02-13 06:39:45+00:00
+Looking in indexes: https://aws:****@hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/
+Collecting hs-cicd-tools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/hs-cicd-tools/8.76.0/hs_cicd_tools-8.76.0.zip (494 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 494.5/494.5 kB 27.2 MB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting kubernetes==27.2.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/kubernetes/27.2.0/kubernetes-27.2.0-py2.py3-none-any.whl (1.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 46.2 MB/s eta 0:00:00
+Collecting docker==7.1.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/docker/7.1.0/docker-7.1.0-py3-none-any.whl (147 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.8/147.8 kB 37.0 MB/s eta 0:00:00
+Collecting boto3==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/boto3/1.40.61/boto3-1.40.61-py3-none-any.whl (139 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.3/139.3 kB 38.6 MB/s eta 0:00:00
+Collecting botocore==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/botocore/1.40.61/botocore-1.40.61-py3-none-any.whl (14.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 81.7 MB/s eta 0:00:00
+Requirement already satisfied: aws-adfs>=1.24.5 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (2.4.0)
+Collecting boto3-stubs[s3,sqs]==1.40.61
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/boto3-stubs/1.40.61/boto3_stubs-1.40.61-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.1/69.1 kB 28.2 MB/s eta 0:00:00
+Collecting mypy-boto3==1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3/1.40.0/mypy_boto3-1.40.0-py3-none-any.whl (22 kB)
+Collecting requests>=2.32.3
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests/2.32.5/requests-2.32.5-py3-none-any.whl (64 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.7/64.7 kB 23.2 MB/s eta 0:00:00
+Collecting PyGithub==1.55
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pygithub/1.55/PyGithub-1.55-py3-none-any.whl (291 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 291.7/291.7 kB 82.7 MB/s eta 0:00:00
+Requirement already satisfied: pyyaml>=5.3.1 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (6.0.3)
+Collecting yamlcore==0.0.4
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/yamlcore/0.0.4/yamlcore-0.0.4-py3-none-any.whl (6.0 kB)
+Requirement already satisfied: jinja2>=1.2 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (3.1.2)
+Collecting retry==0.9.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/retry/0.9.2/retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
+Collecting croniter==1.3.8
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/croniter/1.3.8/croniter-1.3.8-py2.py3-none-any.whl (18 kB)
+Collecting deepdiff==6.3.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/deepdiff/6.3.0/deepdiff-6.3.0-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.7/69.7 kB 26.2 MB/s eta 0:00:00
+Collecting twine==5.0.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/twine/5.0.0/twine-5.0.0-py3-none-any.whl (37 kB)
+Requirement already satisfied: tzdata>=2022.2 in /opt/ansible/lib/python3.10/site-packages (from hs-cicd-tools) (2025.3)
+Collecting pytz>=2024.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pytz/2025.2/pytz-2025.2-py2.py3-none-any.whl (509 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 121.7 MB/s eta 0:00:00
+Collecting atlassian-python-api==3.41.11
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/atlassian-python-api/3.41.11/atlassian_python_api-3.41.11-py3-none-any.whl (173 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 173.3/173.3 kB 65.8 MB/s eta 0:00:00
+Collecting openpyxl==3.1.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/openpyxl/3.1.2/openpyxl-3.1.2-py2.py3-none-any.whl (249 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.0/250.0 kB 61.3 MB/s eta 0:00:00
+Collecting ruamel.yaml==0.18.10
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/ruamel-yaml/0.18.10/ruamel.yaml-0.18.10-py3-none-any.whl (117 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.7/117.7 kB 44.1 MB/s eta 0:00:00
+Collecting greenlet==3.2.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/greenlet/3.2.2/greenlet-3.2.2-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (580 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 580.6/580.6 kB 115.6 MB/s eta 0:00:00
+Requirement already satisfied: jmespath in /opt/ansible/lib/python3.10/site-packages (from atlassian-python-api==3.41.11->hs-cicd-tools) (1.1.0)
+Collecting beautifulsoup4
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/beautifulsoup4/4.14.3/beautifulsoup4-4.14.3-py3-none-any.whl (107 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.7/107.7 kB 46.3 MB/s eta 0:00:00
+Collecting deprecated
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/deprecated/1.3.1/deprecated-1.3.1-py2.py3-none-any.whl (11 kB)
+Requirement already satisfied: six in /opt/ansible/lib/python3.10/site-packages (from atlassian-python-api==3.41.11->hs-cicd-tools) (1.17.0)
+Collecting requests-oauthlib
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests-oauthlib/2.0.0/requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Collecting oauthlib
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/oauthlib/3.3.1/oauthlib-3.3.1-py3-none-any.whl (160 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 160.1/160.1 kB 58.4 MB/s eta 0:00:00
+Collecting s3transfer<0.15.0,>=0.14.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/s3transfer/0.14.0/s3transfer-0.14.0-py3-none-any.whl (85 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.7/85.7 kB 36.6 MB/s eta 0:00:00
+Requirement already satisfied: typing-extensions>=4.1.0 in /opt/ansible/lib/python3.10/site-packages (from boto3-stubs[s3,sqs]==1.40.61->hs-cicd-tools) (4.15.0)
+Collecting types-s3transfer
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/types-s3transfer/0.16.0/types_s3transfer-0.16.0-py3-none-any.whl (19 kB)
+Collecting botocore-stubs
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/botocore-stubs/1.42.41/botocore_stubs-1.42.41-py3-none-any.whl (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 kB 26.3 MB/s eta 0:00:00
+Collecting mypy-boto3-s3<1.41.0,>=1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3-s3/1.40.61/mypy_boto3_s3-1.40.61-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.8/82.8 kB 33.4 MB/s eta 0:00:00
+Collecting mypy-boto3-sqs<1.41.0,>=1.40.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/mypy-boto3-sqs/1.40.61/mypy_boto3_sqs-1.40.61-py3-none-any.whl (33 kB)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in /opt/ansible/lib/python3.10/site-packages (from botocore==1.40.61->hs-cicd-tools) (2.8.2)
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /opt/ansible/lib/python3.10/site-packages (from botocore==1.40.61->hs-cicd-tools) (1.26.20)
+Collecting ordered-set<4.2.0,>=4.0.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/ordered-set/4.1.0/ordered_set-4.1.0-py3-none-any.whl (7.6 kB)
+Requirement already satisfied: certifi>=14.05.14 in /opt/ansible/lib/python3.10/site-packages (from kubernetes==27.2.0->hs-cicd-tools) (2026.1.4)
+Collecting websocket-client!=0.40.0,!=0.41.*,!=0.42.*,>=0.32.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/websocket-client/1.9.0/websocket_client-1.9.0-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.6/82.6 kB 33.0 MB/s eta 0:00:00
+Collecting google-auth>=1.0.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/google-auth/2.48.0/google_auth-2.48.0-py3-none-any.whl (236 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 236.5/236.5 kB 56.4 MB/s eta 0:00:00
+Collecting et-xmlfile
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/et-xmlfile/2.0.0/et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Collecting pyjwt>=2.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pyjwt/2.11.0/pyjwt-2.11.0-py3-none-any.whl (28 kB)
+Collecting pynacl>=1.4.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pynacl/1.6.2/pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl (1.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 99.6 MB/s eta 0:00:00
+Requirement already satisfied: decorator>=3.4.2 in /opt/ansible/lib/python3.10/site-packages (from retry==0.9.2->hs-cicd-tools) (5.2.1)
+Collecting py<2.0.0,>=1.4.26
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/py/1.11.0/py-1.11.0-py2.py3-none-any.whl (98 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 39.1 MB/s eta 0:00:00
+Requirement already satisfied: ruamel.yaml.clib>=0.2.7 in /opt/ansible/lib/python3.10/site-packages (from ruamel.yaml==0.18.10->hs-cicd-tools) (0.2.15)
+Collecting requests-toolbelt!=0.9.0,>=0.8.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/requests-toolbelt/1.0.0/requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 18.2 MB/s eta 0:00:00
+Requirement already satisfied: rich>=12.0.0 in /opt/ansible/lib/python3.10/site-packages (from twine==5.0.0->hs-cicd-tools) (14.3.2)
+Collecting importlib-metadata>=3.6
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/importlib-metadata/8.7.1/importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Collecting readme-renderer>=35.0
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/readme-renderer/44.0/readme_renderer-44.0-py3-none-any.whl (13 kB)
+Collecting pkginfo>=1.8.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pkginfo/1.12.1.2/pkginfo-1.12.1.2-py3-none-any.whl (32 kB)
+Collecting keyring>=15.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/keyring/25.7.0/keyring-25.7.0-py3-none-any.whl (39 kB)
+Requirement already satisfied: rfc3986>=1.4.0 in /opt/ansible/lib/python3.10/site-packages (from twine==5.0.0->hs-cicd-tools) (2.0.0)
+Requirement already satisfied: fido2<2.0,>=1.0 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (1.2.0)
+Requirement already satisfied: click<9.0,>=8.0 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (8.3.1)
+Requirement already satisfied: configparser==5.2 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (5.2.0)
+Requirement already satisfied: requests-kerberos<0.15,>=0.14 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (0.14.0)
+Requirement already satisfied: lxml<5.0,>=4.9 in /opt/ansible/lib/python3.10/site-packages (from aws-adfs>=1.24.5->hs-cicd-tools) (4.9.4)
+Requirement already satisfied: MarkupSafe>=2.0 in /opt/ansible/lib/python3.10/site-packages (from jinja2>=1.2->hs-cicd-tools) (3.0.3)
+Requirement already satisfied: charset_normalizer<4,>=2 in /opt/ansible/lib/python3.10/site-packages (from requests>=2.32.3->hs-cicd-tools) (2.1.1)
+Requirement already satisfied: idna<4,>=2.5 in /opt/ansible/lib/python3.10/site-packages (from requests>=2.32.3->hs-cicd-tools) (3.11)
+Requirement already satisfied: cryptography!=35,<45,>=2.6 in /opt/ansible/lib/python3.10/site-packages (from fido2<2.0,>=1.0->aws-adfs>=1.24.5->hs-cicd-tools) (38.0.4)
+Requirement already satisfied: rsa<5,>=3.1.4 in /opt/ansible/lib/python3.10/site-packages (from google-auth>=1.0.1->kubernetes==27.2.0->hs-cicd-tools) (4.7.2)
+Collecting pyasn1-modules>=0.2.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/pyasn1-modules/0.4.2/pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 60.4 MB/s eta 0:00:00
+Collecting zipp>=3.20
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/zipp/3.23.0/zipp-3.23.0-py3-none-any.whl (10 kB)
+Collecting SecretStorage>=3.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/secretstorage/3.5.0/secretstorage-3.5.0-py3-none-any.whl (15 kB)
+Collecting jaraco.context
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-context/6.1.0/jaraco_context-6.1.0-py3-none-any.whl (7.1 kB)
+Collecting jeepney>=0.4.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jeepney/0.9.0/jeepney-0.9.0-py3-none-any.whl (49 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 49.0/49.0 kB 17.7 MB/s eta 0:00:00
+Collecting jaraco.functools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-functools/4.4.0/jaraco_functools-4.4.0-py3-none-any.whl (10 kB)
+Collecting jaraco.classes
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/jaraco-classes/3.4.0/jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+Requirement already satisfied: cffi>=2.0.0 in /opt/ansible/lib/python3.10/site-packages (from pynacl>=1.4.0->PyGithub==1.55->hs-cicd-tools) (2.0.0)
+Collecting docutils>=0.21.2
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/docutils/0.22.4/docutils-0.22.4-py3-none-any.whl (633 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 633.2/633.2 kB 97.1 MB/s eta 0:00:00
+Requirement already satisfied: Pygments>=2.5.1 in /opt/ansible/lib/python3.10/site-packages (from readme-renderer>=35.0->twine==5.0.0->hs-cicd-tools) (2.19.2)
+Collecting nh3>=0.2.14
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/nh3/0.3.2/nh3-0.3.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (797 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 797.2/797.2 kB 122.0 MB/s eta 0:00:00
+Requirement already satisfied: pyspnego[kerberos] in /opt/ansible/lib/python3.10/site-packages (from requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (0.12.0)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /opt/ansible/lib/python3.10/site-packages (from rich>=12.0.0->twine==5.0.0->hs-cicd-tools) (4.0.0)
+Collecting soupsieve>=1.6.1
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/soupsieve/2.8.3/soupsieve-2.8.3-py3-none-any.whl (37 kB)
+Collecting types-awscrt
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/types-awscrt/0.31.1/types_awscrt-0.31.1-py3-none-any.whl (42 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.5/42.5 kB 16.0 MB/s eta 0:00:00
+Requirement already satisfied: wrapt<3,>=1.10 in /opt/ansible/lib/python3.10/site-packages (from deprecated->atlassian-python-api==3.41.11->hs-cicd-tools) (2.1.1)
+Requirement already satisfied: pycparser in /opt/ansible/lib/python3.10/site-packages (from cffi>=2.0.0->pynacl>=1.4.0->PyGithub==1.55->hs-cicd-tools) (3.0)
+Requirement already satisfied: mdurl~=0.1 in /opt/ansible/lib/python3.10/site-packages (from markdown-it-py>=2.2.0->rich>=12.0.0->twine==5.0.0->hs-cicd-tools) (0.1.2)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in /opt/ansible/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth>=1.0.1->kubernetes==27.2.0->hs-cicd-tools) (0.6.2)
+Collecting more-itertools
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/more-itertools/10.8.0/more_itertools-10.8.0-py3-none-any.whl (69 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.7/69.7 kB 24.2 MB/s eta 0:00:00
+Collecting backports.tarfile
+  Downloading https://hedgeserv-469620122115.d.codeartifact.us-east-2.amazonaws.com/pypi/hs-repo/simple/backports-tarfile/1.2.0/backports.tarfile-1.2.0-py3-none-any.whl (30 kB)
+Requirement already satisfied: krb5>=0.3.0 in /opt/ansible/lib/python3.10/site-packages (from pyspnego[kerberos]->requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (0.9.0)
+Requirement already satisfied: gssapi>=1.6.0 in /opt/ansible/lib/python3.10/site-packages (from pyspnego[kerberos]->requests-kerberos<0.15,>=0.14->aws-adfs>=1.24.5->hs-cicd-tools) (1.11.1)
+Building wheels for collected packages: hs-cicd-tools
+  Building wheel for hs-cicd-tools (setup.py): started
+  Building wheel for hs-cicd-tools (setup.py): finished with status 'done'
+  Created wheel for hs-cicd-tools: filename=hs_cicd_tools-8.76.0-py3-none-any.whl size=500910 sha256=1027c5bbcc723c5ed1c62146632bda7b1b9b88e1844329c26151874ad785a0c1
+  Stored in directory: /root/.cache/pip/wheels/4f/0f/7e/4c60be957d1f09a5e533f6161cf83e2c1b79a33aa0c8636ad0
+Successfully built hs-cicd-tools
+Installing collected packages: pytz, zipp, yamlcore, websocket-client, types-s3transfer, types-awscrt, soupsieve, ruamel.yaml, requests, pyjwt, pyasn1-modules, py, pkginfo, ordered-set, oauthlib, nh3, mypy-boto3-sqs, mypy-boto3-s3, more-itertools, jeepney, greenlet, et-xmlfile, docutils, deprecated, backports.tarfile, retry, requests-toolbelt, requests-oauthlib, readme-renderer, pynacl, openpyxl, jaraco.functools, jaraco.context, jaraco.classes, importlib-metadata, docker, deepdiff, croniter, botocore-stubs, botocore, beautifulsoup4, SecretStorage, s3transfer, PyGithub, google-auth, boto3-stubs, atlassian-python-api, kubernetes, keyring, boto3, twine, mypy-boto3, hs-cicd-tools
+  Attempting uninstall: ruamel.yaml
+    Found existing installation: ruamel.yaml 0.17.40
+    Uninstalling ruamel.yaml-0.17.40:
+      Successfully uninstalled ruamel.yaml-0.17.40
+  Attempting uninstall: requests
+    Found existing installation: requests 2.28.1
+    Uninstalling requests-2.28.1:
+      Successfully uninstalled requests-2.28.1
+  Attempting uninstall: docutils
+    Found existing installation: docutils 0.19
+    Uninstalling docutils-0.19:
+      Successfully uninstalled docutils-0.19
+  Attempting uninstall: botocore
+    Found existing installation: botocore 1.42.47
+    Uninstalling botocore-1.42.47:
+      Successfully uninstalled botocore-1.42.47
+  Attempting uninstall: s3transfer
+    Found existing installation: s3transfer 0.16.0
+    Uninstalling s3transfer-0.16.0:
+      Successfully uninstalled s3transfer-0.16.0
+  Attempting uninstall: boto3
+    Found existing installation: boto3 1.42.47
+    Uninstalling boto3-1.42.47:
+      Successfully uninstalled boto3-1.42.47
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+solidfire-sdk-python 12.3.0.203 requires enum34>=1.1.6, which is not installed.
+awscli 1.44.37 requires botocore==1.42.47, but you have botocore 1.40.61 which is incompatible.
+awscli 1.44.37 requires docutils<=0.19,>=0.18.1, but you have docutils 0.22.4 which is incompatible.
+awscli 1.44.37 requires s3transfer<0.17.0,>=0.16.0, but you have s3transfer 0.14.0 which is incompatible.
+ansible-lint 6.9.1 requires ruamel.yaml<0.18,>=0.17.21, but you have ruamel-yaml 0.18.10 which is incompatible.
+Successfully installed PyGithub-1.55 SecretStorage-3.5.0 atlassian-python-api-3.41.11 backports.tarfile-1.2.0 beautifulsoup4-4.14.3 boto3-1.40.61 boto3-stubs-1.40.61 botocore-1.40.61 botocore-stubs-1.42.41 croniter-1.3.8 deepdiff-6.3.0 deprecated-1.3.1 docker-7.1.0 docutils-0.22.4 et-xmlfile-2.0.0 google-auth-2.48.0 greenlet-3.2.2 hs-cicd-tools-8.76.0 importlib-metadata-8.7.1 jaraco.classes-3.4.0 jaraco.context-6.1.0 jaraco.functools-4.4.0 jeepney-0.9.0 keyring-25.7.0 kubernetes-27.2.0 more-itertools-10.8.0 mypy-boto3-1.40.0 mypy-boto3-s3-1.40.61 mypy-boto3-sqs-1.40.61 nh3-0.3.2 oauthlib-3.3.1 openpyxl-3.1.2 ordered-set-4.1.0 pkginfo-1.12.1.2 py-1.11.0 pyasn1-modules-0.4.2 pyjwt-2.11.0 pynacl-1.6.2 pytz-2025.2 readme-renderer-44.0 requests-2.32.5 requests-oauthlib-2.0.0 requests-toolbelt-1.0.0 retry-0.9.2 ruamel.yaml-0.18.10 s3transfer-0.14.0 soupsieve-2.8.3 twine-5.0.0 types-awscrt-0.31.1 types-s3transfer-0.16.0 websocket-client-1.9.0 yamlcore-0.0.4 zipp-3.23.0
+
+[notice] A new release of pip is available: 23.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+Call common buildspec
+Set trap for report upload
+Parse parameters
+Setup boto credentials
+AWS creds will expire at: 2026-02-12T19:38:45Z
+'/codebuild/output/src643/src/s3/01/environment_automation.py' -> '/codebuild/output/src643/src/s3/01/HST/'
+cp: cannot create regular file '/codebuild/output/src643/src/s3/01/HST/': Not a directory
+We are running the onprem role
+Execute: ansible-playbook elastic_agents.yml -i /codebuild/output/src643/src/s3/01/hst/environment_automation.py -l ts01-11rl42 -vvv
+ansible-playbook [core 2.12.10]
+  config file = /opt/ansible/playbooks/elastic_agents/ansible.cfg
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/ansible/lib/python3.10/site-packages/ansible
+  ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/ansible/bin/ansible-playbook
+  python version = 3.10.12 (main, Feb 12 2026, 10:00:44) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]
+  jinja version = 3.1.2
+  libyaml = True
+Using /opt/ansible/playbooks/elastic_agents/ansible.cfg as config file
+host_list declined parsing /codebuild/output/src643/src/s3/01/hst/environment_automation.py as it did not pass its verify_file() method
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+Parsed /codebuild/output/src643/src/s3/01/hst/environment_automation.py inventory source with script plugin
+redirecting (type: callback) ansible.builtin.timer to ansible.posix.timer
+Skipping callback 'default', as we already have a stdout callback.
+Skipping callback 'minimal', as we already have a stdout callback.
+Skipping callback 'oneline', as we already have a stdout callback.
+'report' callback plugin initialized
+Skipping callback 'veil', as we already have a stdout callback.
+
+PLAYBOOK: elastic_agents.yml ***************************************************
+1 plays in elastic_agents.yml
+
+PLAY [Install Elastic Agents] **************************************************
+META: ran handlers
+
+TASK [Set ntlm on winRM connection if OS is ste to ntlm_enabled] ***************
+task path: /opt/ansible/playbooks/elastic_agents/elastic_agents.yml:16
+redirecting (type: lookup) ansible.builtin.aws_secret to amazon.aws.aws_secret
+'cached' lookup cache miss for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [Get role from env] *******************************************************
+task path: /opt/ansible/playbooks/elastic_agents/elastic_agents.yml:25
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "elastic_role": "onprem"
+    },
+    "changed": false
+}
+
+TASK [Test connection] *********************************************************
+task path: /opt/ansible/playbooks/elastic_agents/elastic_agents.yml:29
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+wait_for_connection: attempting ping module test
+sending connection check: [b'sshpass', b'-d11', b'ssh', b'-C', b'-o', b'ControlMaster=auto', b'-o', b'ControlPersist=60s', b'-o', b'StrictHostKeyChecking=no', b'-o', b'Port=22', b'-o', b'User="service-ansible"', b'-o', b'ConnectTimeout=10', b'-o', b'StrictHostKeyChecking=no', b'-o', b'ControlPath="/root/.ansible/cp/f5a48d77ea"', b'-O', b'check', b'ts01-11rl42.hedgeservtest.com']
+No connection to reset: Control socket connect(/root/.ansible/cp/f5a48d77ea): No such file or directory
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo ~service-ansible && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'/home/hedgeservtest.com/service-ansible\n', b"Warning: Permanently added 'ts01-11rl42.hedgeservtest.com' (ED25519) to the list of known hosts.\r\n")
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp `"&& mkdir "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060 `" && echo ansible-tmp-1770921621.629373-213-181230154184060="` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060 `" ) && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'ansible-tmp-1770921621.629373-213-181230154184060=/home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060\n', b'')
+<ts01-11rl42> Attempting python interpreter discovery
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo PLATFORM; uname; echo FOUND; command -v '"'"'"'"'"'"'"'"'python3.10'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.9'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.8'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.7'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.6'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.5'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/bin/python3'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/libexec/platform-python'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python2.7'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python2.6'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/bin/python'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python'"'"'"'"'"'"'"'"'; echo ENDFOUND && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'PLATFORM\nLinux\nFOUND\n/usr/libexec/platform-python\n/usr/bin/python2.7\n/usr/bin/python\n/usr/bin/python\nENDFOUND\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'/usr/libexec/platform-python && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'{"osrelease_content": "NAME=\\"CentOS Linux\\"\\nVERSION=\\"7 (Core)\\"\\nID=\\"centos\\"\\nID_LIKE=\\"rhel fedora\\"\\nVERSION_ID=\\"7\\"\\nPRETTY_NAME=\\"CentOS Linux 7 (Core)\\"\\nANSI_COLOR=\\"0;31\\"\\nCPE_NAME=\\"cpe:/o:centos:centos:7\\"\\nHOME_URL=\\"https://www.centos.org/\\"\\nBUG_REPORT_URL=\\"https://bugs.centos.org/\\"\\n\\nCENTOS_MANTISBT_PROJECT=\\"CentOS-7\\"\\nCENTOS_MANTISBT_PROJECT_VERSION=\\"7\\"\\nREDHAT_SUPPORT_PRODUCT=\\"centos\\"\\nREDHAT_SUPPORT_PRODUCT_VERSION=\\"7\\"\\n\\n", "platform_dist_result": ["centos", "7.9.2009", "Core"]}\n', b'')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/ping.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpu94lzj8f TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/AnsiballZ_ping.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpu94lzj8f /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/AnsiballZ_ping.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/AnsiballZ_ping.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'/usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/AnsiballZ_ping.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'\r\n{"invocation": {"module_args": {"data": "pong"}}, "ping": "pong"}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d13 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'rm -f -r /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921621.629373-213-181230154184060/ > /dev/null 2>&1 && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+ok: [ts01-11rl42] => {
+    "changed": false,
+    "elapsed": 1
+}
+
+TASK [Set host domain] *********************************************************
+task path: /opt/ansible/playbooks/elastic_agents/elastic_agents.yml:36
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [Load hs_role_elastic_agents] *********************************************
+task path: /opt/ansible/playbooks/elastic_agents/elastic_agents.yml:41
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+redirecting (type: modules) ansible.builtin.win_file to ansible.windows.win_file
+
+TASK [hs_role_elastic_agents : Set consul_var] *********************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:2
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "consul_host_key": "consul_uat"
+    },
+    "changed": false
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:6
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "msg": [
+        "consul_host_key -> consul_uat"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set consul_env] *********************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:10
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "csl_env": {
+            "env_path": "uat"
+        }
+    },
+    "changed": false
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:14
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "msg": [
+        "csl_env -> {'env_path': 'uat'}"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set elasticsearch_var] **************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:18
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "elasticsearch": {
+            "cluster": {
+                "name": "qa",
+                "uuid": "mXqbzwdKSvSeNAJ1lM5oIw"
+            },
+            "endpoint": "https://hselkqa.hedgeserv.net:9243",
+            "monitoring": "https://hselkmon.hedgeserv.net:9243"
+        }
+    },
+    "changed": false
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:22
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "msg": [
+        "elasticsearch -> {'cluster': {'uuid': 'mXqbzwdKSvSeNAJ1lM5oIw', 'name': 'qa'}, 'endpoint': 'https://hselkqa.hedgeserv.net:9243', 'monitoring': 'https://hselkmon.hedgeserv.net:9243'}"
+    ]
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:26
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "msg": [
+        "env -> UAT"
+    ]
+}
+
+TASK [hs_role_elastic_agents : debug] ******************************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:30
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "msg": [
+        "environment_code -> REDIS"
+    ]
+}
+
+TASK [hs_role_elastic_agents : Set Version of Role] ****************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:34
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "role_version": "1.44.32"
+    },
+    "changed": false
+}
+
+TASK [hs_role_elastic_agents : Include app code vars] **************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:38
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "filebeat": {
+            "logs": [
+                {
+                    "enabled": true,
+                    "exclude_files": [
+                        "event_log.log"
+                    ],
+                    "fields_under_root": true,
+                    "ignore_decoding_error": true,
+                    "is_json": false,
+                    "logtype": "redislabs-logs",
+                    "paths": [
+                        "/var/opt/redislabs/log/*.log"
+                    ],
+                    "type": "log"
+                },
+                {
+                    "enabled": true,
+                    "fields_under_root": true,
+                    "ignore_decoding_error": true,
+                    "is_json": false,
+                    "logtype": "redis-event-logs",
+                    "match": "after",
+                    "negate": true,
+                    "paths": [
+                        "/var/opt/redislabs/log/event_log.log"
+                    ],
+                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}",
+                    "type": "log"
+                }
+            ]
+        },
+        "filebeat_state": "present",
+        "metricbeat": {
+            "modules": {
+                "prometheus": {
+                    "hosts": [
+                        "https://localhost:8070"
+                    ],
+                    "metrics_filters": {
+                        "include": [
+                            "bdb_*",
+                            "redis_*"
+                        ]
+                    },
+                    "metrics_path": "/metrics",
+                    "period": "30s",
+                    "ssl.verification_mode": "none"
+                },
+                "redisenterprise": {
+                    "hosts": [
+                        "https://localhost:8070"
+                    ],
+                    "metrics_path": "/metrics",
+                    "metricsets": [
+                        "node",
+                        "proxy"
+                    ],
+                    "period": "1m",
+                    "ssl.verification_mode": "none"
+                }
+            }
+        },
+        "metricbeat_state": "present"
+    },
+    "ansible_included_var_files": [
+        "/opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/vars/app_code_config/uat/redis.yml"
+    ],
+    "changed": false
+}
+
+TASK [hs_role_elastic_agents : Install Filebeat] *******************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/main.yml:44
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+redirecting (type: modules) ansible.builtin.win_file to ansible.windows.win_file
+redirecting (type: modules) ansible.builtin.win_get_url to ansible.windows.win_get_url
+redirecting (type: modules) ansible.builtin.win_unzip to community.windows.win_unzip
+redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+included: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml for ts01-11rl42 => (item=install-filebeat.yml)
+redirecting (type: action) ansible.builtin.win_template to ansible.windows.win_template
+included: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/config-filebeat.yml for ts01-11rl42 => (item=config-filebeat.yml)
+
+TASK [hs_role_elastic_agents : Check version of filebeat] **********************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:4
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Remove filebeat service] ************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:12
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Creating temp\beats Path] ***********************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:18
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Download filebeat from S3 Generic Artifacts] ****
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:23
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Unzip Filebeat] *********************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:28
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+
+TASK [hs_role_elastic_agents : Move filebeat folder under Program Files] *******
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:34
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Configure and Enable ELK Repo] ******************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:50
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Configure and Enable hs_internal_rpm Repo] ******
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:59
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Check filebeat version] *************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:68
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Remove old filebeat] ****************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:75
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Install filebeat] *******************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:81
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Enable service filebeat on boot] ****************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:87
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Configure and Enable ELK Repo] ******************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:101
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo ~service-ansible && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'/home/hedgeservtest.com/service-ansible\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp `"&& mkdir "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476 `" && echo ansible-tmp-1770921623.8754177-288-206116106388476="` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476 `" ) && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'ansible-tmp-1770921623.8754177-288-206116106388476=/home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476\n', b'')
+<ts01-11rl42> Attempting python interpreter discovery
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo PLATFORM; uname; echo FOUND; command -v '"'"'"'"'"'"'"'"'python3.10'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.9'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.8'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.7'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.6'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.5'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/bin/python3'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/libexec/platform-python'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python2.7'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python2.6'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/bin/python'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python'"'"'"'"'"'"'"'"'; echo ENDFOUND && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'PLATFORM\nLinux\nFOUND\n/usr/libexec/platform-python\n/usr/bin/python2.7\n/usr/bin/python\n/usr/bin/python\nENDFOUND\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'/usr/libexec/platform-python && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'{"osrelease_content": "NAME=\\"CentOS Linux\\"\\nVERSION=\\"7 (Core)\\"\\nID=\\"centos\\"\\nID_LIKE=\\"rhel fedora\\"\\nVERSION_ID=\\"7\\"\\nPRETTY_NAME=\\"CentOS Linux 7 (Core)\\"\\nANSI_COLOR=\\"0;31\\"\\nCPE_NAME=\\"cpe:/o:centos:centos:7\\"\\nHOME_URL=\\"https://www.centos.org/\\"\\nBUG_REPORT_URL=\\"https://bugs.centos.org/\\"\\n\\nCENTOS_MANTISBT_PROJECT=\\"CentOS-7\\"\\nCENTOS_MANTISBT_PROJECT_VERSION=\\"7\\"\\nREDHAT_SUPPORT_PRODUCT=\\"centos\\"\\nREDHAT_SUPPORT_PRODUCT_VERSION=\\"7\\"\\n\\n", "platform_dist_result": ["centos", "7.9.2009", "Core"]}\n', b'')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/yum_repository.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmply2skt5n TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/AnsiballZ_yum_repository.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmply2skt5n /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/AnsiballZ_yum_repository.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/AnsiballZ_yum_repository.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-ahnlvggzbhsjcobhzmyuoxgzsefhodnl ; /usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/AnsiballZ_yum_repository.py'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+Escalation succeeded
+<ts01-11rl42.hedgeservtest.com> (0, b'\r\n{"repo": "elk", "diff": {"after": "[elk]\\nasync = 1\\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/\\nenabled = 1\\ngpgcheck = 0\\nname = Artifactory-CentOS-ELK\\nsslverify = 0\\n\\n", "before_header": "/etc/yum.repos.d/elk.repo", "after_header": "/etc/yum.repos.d/elk.repo", "before": "[elk]\\nasync = 1\\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/\\nenabled = 1\\ngpgcheck = 0\\nname = Artifactory-CentOS-ELK\\nsslverify = 0\\n\\n"}, "state": "present", "changed": false, "invocation": {"module_args": {"seuser": null, "ip_resolve": null, "reposdir": "/etc/yum.repos.d", "includepkgs": null, "group": null, "mirrorlist_expire": null, "bandwidth": null, "cost": null, "file": "elk", "owner": null, "exclude": null, "attributes": null, "repoid": "elk", "keepalive": null, "module_hotfixes": null, "proxy_username": null, "sslverify": false, "failovermethod": null, "repo_gpgcheck": null, "deltarpm_metadata_percentage": null, "gpgkey": null, "state": "present", "http_caching": null, "priority": null, "serole": null, "mirrorlist": null, "params": null, "gpgcheck": false, "include": null, "setype": null, "username": null, "metadata_expire": null, "retries": null, "dest": "/etc/yum.repos.d/elk.repo", "selevel": null, "sslclientcert": null, "baseurl": "http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/", "gpgcakey": null, "s3_enabled": null, "proxy_password": null, "enablegroups": null, "sslcacert": null, "password": null, "ui_repoid_vars": null, "protect": null, "ssl_check_cert_permissions": null, "throttle": null, "name": "Artifactory-CentOS-ELK", "deltarpm_percentage": null, "sslclientkey": null, "metalink": null, "enabled": true, "skip_if_unavailable": null, "unsafe_writes": false, "keepcache": null, "mode": null, "timeout": null, "async": true, "metadata_expire_filter": null, "proxy": null}}}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'rm -f -r /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921623.8754177-288-206116106388476/ > /dev/null 2>&1 && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+ok: [ts01-11rl42] => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "diff": {
+        "after": "[elk]\nasync = 1\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/\nenabled = 1\ngpgcheck = 0\nname = Artifactory-CentOS-ELK\nsslverify = 0\n\n",
+        "after_header": "/etc/yum.repos.d/elk.repo",
+        "before": "[elk]\nasync = 1\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/\nenabled = 1\ngpgcheck = 0\nname = Artifactory-CentOS-ELK\nsslverify = 0\n\n",
+        "before_header": "/etc/yum.repos.d/elk.repo"
+    },
+    "invocation": {
+        "module_args": {
+            "async": true,
+            "attributes": null,
+            "bandwidth": null,
+            "baseurl": "http://pulp.hedgeserv.net:8080/pulp/content/Artifactory-CentOS-ELK-8x/",
+            "cost": null,
+            "deltarpm_metadata_percentage": null,
+            "deltarpm_percentage": null,
+            "dest": "/etc/yum.repos.d/elk.repo",
+            "enabled": true,
+            "enablegroups": null,
+            "exclude": null,
+            "failovermethod": null,
+            "file": "elk",
+            "gpgcakey": null,
+            "gpgcheck": false,
+            "gpgkey": null,
+            "group": null,
+            "http_caching": null,
+            "include": null,
+            "includepkgs": null,
+            "ip_resolve": null,
+            "keepalive": null,
+            "keepcache": null,
+            "metadata_expire": null,
+            "metadata_expire_filter": null,
+            "metalink": null,
+            "mirrorlist": null,
+            "mirrorlist_expire": null,
+            "mode": null,
+            "module_hotfixes": null,
+            "name": "Artifactory-CentOS-ELK",
+            "owner": null,
+            "params": null,
+            "password": null,
+            "priority": null,
+            "protect": null,
+            "proxy": null,
+            "proxy_password": null,
+            "proxy_username": null,
+            "repo_gpgcheck": null,
+            "repoid": "elk",
+            "reposdir": "/etc/yum.repos.d",
+            "retries": null,
+            "s3_enabled": null,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "skip_if_unavailable": null,
+            "ssl_check_cert_permissions": null,
+            "sslcacert": null,
+            "sslclientcert": null,
+            "sslclientkey": null,
+            "sslverify": false,
+            "state": "present",
+            "throttle": null,
+            "timeout": null,
+            "ui_repoid_vars": null,
+            "unsafe_writes": false,
+            "username": null
+        }
+    },
+    "repo": "elk",
+    "state": "present"
+}
+
+TASK [hs_role_elastic_agents : Configure and Enable hs_internal_rpm Repo] ******
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:110
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo ~service-ansible && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'/home/hedgeservtest.com/service-ansible\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp `"&& mkdir "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002 `" && echo ansible-tmp-1770921625.0503502-308-246285697850002="` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002 `" ) && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'ansible-tmp-1770921625.0503502-308-246285697850002=/home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002\n', b'')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/yum_repository.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmppbeo5j6g TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/AnsiballZ_yum_repository.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmppbeo5j6g /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/AnsiballZ_yum_repository.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/AnsiballZ_yum_repository.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-ptmwkwoiwinbbuqsocnxawsoigffhqah ; /usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/AnsiballZ_yum_repository.py'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+Escalation succeeded
+<ts01-11rl42.hedgeservtest.com> (0, b'\r\n{"repo": "hs_internal_rpm", "diff": {"after": "[hs_internal_rpm]\\nasync = 1\\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/\\nenabled = 1\\ngpgcheck = 0\\nname = hs_internal_rpm yum repository\\nsslverify = 0\\n\\n", "before_header": "/etc/yum.repos.d/hs_internal_rpm.repo", "after_header": "/etc/yum.repos.d/hs_internal_rpm.repo", "before": "[hs_internal_rpm]\\nasync = 1\\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/\\nenabled = 1\\ngpgcheck = 0\\nname = hs_internal_rpm yum repository\\nsslverify = 0\\n\\n"}, "state": "present", "changed": false, "invocation": {"module_args": {"seuser": null, "ip_resolve": null, "reposdir": "/etc/yum.repos.d", "includepkgs": null, "group": null, "mirrorlist_expire": null, "bandwidth": null, "cost": null, "file": "hs_internal_rpm", "owner": null, "exclude": null, "attributes": null, "repoid": "hs_internal_rpm", "keepalive": null, "module_hotfixes": null, "proxy_username": null, "sslverify": false, "failovermethod": null, "repo_gpgcheck": null, "deltarpm_metadata_percentage": null, "gpgkey": null, "state": "present", "http_caching": null, "priority": null, "serole": null, "mirrorlist": null, "params": null, "gpgcheck": false, "include": null, "setype": null, "username": null, "metadata_expire": null, "retries": null, "dest": "/etc/yum.repos.d/hs_internal_rpm.repo", "selevel": null, "sslclientcert": null, "baseurl": "http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/", "gpgcakey": null, "s3_enabled": null, "proxy_password": null, "enablegroups": null, "sslcacert": null, "password": null, "ui_repoid_vars": null, "protect": null, "ssl_check_cert_permissions": null, "throttle": null, "name": "hs_internal_rpm yum repository", "deltarpm_percentage": null, "sslclientkey": null, "metalink": null, "enabled": true, "skip_if_unavailable": null, "unsafe_writes": false, "keepcache": null, "mode": null, "timeout": null, "async": true, "metadata_expire_filter": null, "proxy": null}}}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'rm -f -r /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.0503502-308-246285697850002/ > /dev/null 2>&1 && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+ok: [ts01-11rl42] => {
+    "changed": false,
+    "diff": {
+        "after": "[hs_internal_rpm]\nasync = 1\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/\nenabled = 1\ngpgcheck = 0\nname = hs_internal_rpm yum repository\nsslverify = 0\n\n",
+        "after_header": "/etc/yum.repos.d/hs_internal_rpm.repo",
+        "before": "[hs_internal_rpm]\nasync = 1\nbaseurl = http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/\nenabled = 1\ngpgcheck = 0\nname = hs_internal_rpm yum repository\nsslverify = 0\n\n",
+        "before_header": "/etc/yum.repos.d/hs_internal_rpm.repo"
+    },
+    "invocation": {
+        "module_args": {
+            "async": true,
+            "attributes": null,
+            "bandwidth": null,
+            "baseurl": "http://pulp.hedgeserv.net:8080/pulp/content/hs_internal_rpm/",
+            "cost": null,
+            "deltarpm_metadata_percentage": null,
+            "deltarpm_percentage": null,
+            "dest": "/etc/yum.repos.d/hs_internal_rpm.repo",
+            "enabled": true,
+            "enablegroups": null,
+            "exclude": null,
+            "failovermethod": null,
+            "file": "hs_internal_rpm",
+            "gpgcakey": null,
+            "gpgcheck": false,
+            "gpgkey": null,
+            "group": null,
+            "http_caching": null,
+            "include": null,
+            "includepkgs": null,
+            "ip_resolve": null,
+            "keepalive": null,
+            "keepcache": null,
+            "metadata_expire": null,
+            "metadata_expire_filter": null,
+            "metalink": null,
+            "mirrorlist": null,
+            "mirrorlist_expire": null,
+            "mode": null,
+            "module_hotfixes": null,
+            "name": "hs_internal_rpm yum repository",
+            "owner": null,
+            "params": null,
+            "password": null,
+            "priority": null,
+            "protect": null,
+            "proxy": null,
+            "proxy_password": null,
+            "proxy_username": null,
+            "repo_gpgcheck": null,
+            "repoid": "hs_internal_rpm",
+            "reposdir": "/etc/yum.repos.d",
+            "retries": null,
+            "s3_enabled": null,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "skip_if_unavailable": null,
+            "ssl_check_cert_permissions": null,
+            "sslcacert": null,
+            "sslclientcert": null,
+            "sslclientkey": null,
+            "sslverify": false,
+            "state": "present",
+            "throttle": null,
+            "timeout": null,
+            "ui_repoid_vars": null,
+            "unsafe_writes": false,
+            "username": null
+        }
+    },
+    "repo": "hs_internal_rpm",
+    "state": "present"
+}
+
+TASK [hs_role_elastic_agents : Check filebeat version] *************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:119
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo ~service-ansible && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'/home/hedgeservtest.com/service-ansible\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp `"&& mkdir "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111 `" && echo ansible-tmp-1770921625.8932064-324-200181241777111="` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111 `" ) && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'ansible-tmp-1770921625.8932064-324-200181241777111=/home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111\n', b'')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/command.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpapkto6ch TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/AnsiballZ_command.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpapkto6ch /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/AnsiballZ_command.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/AnsiballZ_command.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-raebajonqgcrvelkltpcsmagnnwxzzbn ; /usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/AnsiballZ_command.py'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+Escalation succeeded
+<ts01-11rl42.hedgeservtest.com> (1, b'\r\n{"exception": "WARNING: The below traceback may *not* be related to the actual failure.\\n  File \\"/tmp/ansible_ansible.legacy.command_payload_Xi6fnU/ansible_ansible.legacy.command_payload.zip/ansible/module_utils/basic.py\\", line 2025, in run_command\\n    cmd = subprocess.Popen(args, **kwargs)\\n  File \\"/usr/lib64/python2.7/subprocess.py\\", line 711, in __init__\\n    errread, errwrite)\\n  File \\"/usr/lib64/python2.7/subprocess.py\\", line 1327, in _execute_child\\n    raise child_exception\\n", "stdout": "", "cmd": "/usr/share/filebeat/bin/filebeat version", "failed": true, "stderr": "", "rc": 2, "invocation": {"module_args": {"creates": null, "executable": null, "_uses_shell": false, "strip_empty_ends": true, "_raw_params": "/usr/share/filebeat/bin/filebeat version", "removes": null, "argv": null, "warn": false, "chdir": null, "stdin_add_newline": true, "stdin": null}}, "msg": "[Errno 2] No such file or directory"}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+<ts01-11rl42.hedgeservtest.com> Failed to connect to the host via ssh: Shared connection to ts01-11rl42.hedgeservtest.com closed.
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'rm -f -r /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921625.8932064-324-200181241777111/ > /dev/null 2>&1 && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+The full traceback is:
+WARNING: The below traceback may *not* be related to the actual failure.
+  File "/tmp/ansible_ansible.legacy.command_payload_Xi6fnU/ansible_ansible.legacy.command_payload.zip/ansible/module_utils/basic.py", line 2025, in run_command
+    cmd = subprocess.Popen(args, **kwargs)
+  File "/usr/lib64/python2.7/subprocess.py", line 711, in __init__
+    errread, errwrite)
+  File "/usr/lib64/python2.7/subprocess.py", line 1327, in _execute_child
+    raise child_exception
+fatal: [ts01-11rl42]: FAILED! => {
+    "changed": false,
+    "cmd": "/usr/share/filebeat/bin/filebeat version",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "/usr/share/filebeat/bin/filebeat version",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": false
+        }
+    },
+    "msg": "[Errno 2] No such file or directory",
+    "rc": 2,
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "",
+    "stdout_lines": []
+}
+...ignoring
+
+TASK [hs_role_elastic_agents : Remove old filebeat] ****************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:126
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+skipping: [ts01-11rl42] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+
+TASK [hs_role_elastic_agents : Install filebeat] *******************************
+task path: /opt/ansible/playbooks/elastic_agents/roles/hs_role_elastic_agents/tasks/install-filebeat.yml:132
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+'cached' lookup cache hit for ('aws_secret', ['arn:aws:secretsmanager:us-east-2:469620122115:secret:ansible/hst/service_ansible'], {})
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'echo ~service-ansible && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'/home/hedgeservtest.com/service-ansible\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp `"&& mkdir "` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604 `" && echo ansible-tmp-1770921626.899404-342-109271415185604="` echo /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604 `" ) && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'ansible-tmp-1770921626.899404-342-109271415185604=/home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604\n', b'')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/setup.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpnuriecy7 TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_setup.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpnuriecy7 /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_setup.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_setup.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-oacmzxeujwyzxkkyrhbpiplpdhfigmbx ; /usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_setup.py'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+Escalation succeeded
+<ts01-11rl42.hedgeservtest.com> (0, b'\r\n{"invocation": {"module_args": {"filter": ["ansible_pkg_mgr"], "gather_subset": ["!all"], "fact_path": "/etc/ansible/facts.d", "gather_timeout": 10}}, "ansible_facts": {"ansible_pkg_mgr": "yum"}}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+Using module file /opt/ansible/lib/python3.10/site-packages/ansible/modules/yum.py
+<ts01-11rl42.hedgeservtest.com> PUT /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpl9l77tpp TO /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_yum.py
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' '[ts01-11rl42.hedgeservtest.com]'
+<ts01-11rl42.hedgeservtest.com> (0, b'sftp> put /root/.ansible/tmp/ansible-local-204aekxpqtr/tmpl9l77tpp /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_yum.py\n', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'chmod u+x /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/ /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_yum.py && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' -tt ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-uistzybnsidgizoohplogwrcekseqpbf ; /usr/bin/python /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/AnsiballZ_yum.py'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+Escalation succeeded
+<ts01-11rl42.hedgeservtest.com> (1, b'There was an error communicating with RHN.\r\nRed Hat Satellite or RHN Classic support will be disabled.\r\nrhn-plugin: Error communicating with server. The message was:\r\nUnable to connect to the host and port specified\r\n\r\n{"msg": "Error accessing repos: File contains no section headers.\\nfile: file:///etc/yum.repos.d/CentOS-7-Extras.repo, line: 1\\n\'-7-Extras]\\\\n\'", "failed": true, "exception": "WARNING: The below traceback may *not* be related to the actual failure.\\n  File \\"/tmp/ansible_ansible.legacy.yum_payload_f3vEYj/ansible_ansible.legacy.yum_payload.zip/ansible/modules/yum.py\\", line 1632, in ensure\\n  File \\"/usr/lib/python2.7/site-packages/yum/__init__.py\\", line 1071, in <lambda>\\n    repos = property(fget=lambda self: self._getRepos(),\\n  File \\"/usr/lib/python2.7/site-packages/yum/__init__.py\\", line 694, in _getRepos\\n    self.getReposFromConfig()\\n  File \\"/usr/lib/python2.7/site-packages/yum/__init__.py\\", line 567, in getReposFromConfig\\n    self.getReposFromConfigFile(repofn, repo_age=thisrepo_age)\\n  File \\"/usr/lib/python2.7/site-packages/yum/__init__.py\\", line 465, in getReposFromConfigFile\\n    raise Errors.ConfigError(exception2msg(e))\\n", "invocation": {"module_args": {"lock_timeout": 30, "update_cache": false, "conf_file": null, "exclude": [], "allow_downgrade": false, "disable_gpg_check": false, "disable_excludes": null, "use_backend": "auto", "state": "present", "disablerepo": [], "skip_broken": false, "releasever": null, "cacheonly": false, "autoremove": false, "download_dir": null, "enable_plugin": [], "installroot": "/", "install_weak_deps": true, "name": ["filebeat-8.19.4"], "download_only": false, "bugfix": false, "list": null, "install_repoquery": true, "update_only": false, "disable_plugin": [], "enablerepo": [], "security": false, "validate_certs": true}}}\r\n', b'Shared connection to ts01-11rl42.hedgeservtest.com closed.\r\n')
+<ts01-11rl42.hedgeservtest.com> Failed to connect to the host via ssh: Shared connection to ts01-11rl42.hedgeservtest.com closed.
+<ts01-11rl42.hedgeservtest.com> ESTABLISH SSH CONNECTION FOR USER: service-ansible
+<ts01-11rl42.hedgeservtest.com> SSH: EXEC sshpass -d11 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=22 -o 'User="service-ansible"' -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o 'ControlPath="/root/.ansible/cp/f5a48d77ea"' ts01-11rl42.hedgeservtest.com '/bin/sh -c '"'"'rm -f -r /home/hedgeservtest.com/service-ansible/.ansible/tmp/ansible-tmp-1770921626.899404-342-109271415185604/ > /dev/null 2>&1 && sleep 0'"'"''
+<ts01-11rl42.hedgeservtest.com> (0, b'', b'')
+The full traceback is:
+WARNING: The below traceback may *not* be related to the actual failure.
+  File "/tmp/ansible_ansible.legacy.yum_payload_f3vEYj/ansible_ansible.legacy.yum_payload.zip/ansible/modules/yum.py", line 1632, in ensure
+  File "/usr/lib/python2.7/site-packages/yum/__init__.py", line 1071, in <lambda>
+    repos = property(fget=lambda self: self._getRepos(),
+  File "/usr/lib/python2.7/site-packages/yum/__init__.py", line 694, in _getRepos
+    self.getReposFromConfig()
+  File "/usr/lib/python2.7/site-packages/yum/__init__.py", line 567, in getReposFromConfig
+    self.getReposFromConfigFile(repofn, repo_age=thisrepo_age)
+  File "/usr/lib/python2.7/site-packages/yum/__init__.py", line 465, in getReposFromConfigFile
+    raise Errors.ConfigError(exception2msg(e))
+fatal: [ts01-11rl42]: FAILED! => {
+    "ansible_facts": {
+        "pkg_mgr": "yum"
+    },
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "allow_downgrade": false,
+            "autoremove": false,
+            "bugfix": false,
+            "cacheonly": false,
+            "conf_file": null,
+            "disable_excludes": null,
+            "disable_gpg_check": false,
+            "disable_plugin": [],
+            "disablerepo": [],
+            "download_dir": null,
+            "download_only": false,
+            "enable_plugin": [],
+            "enablerepo": [],
+            "exclude": [],
+            "install_repoquery": true,
+            "install_weak_deps": true,
+            "installroot": "/",
+            "list": null,
+            "lock_timeout": 30,
+            "name": [
+                "filebeat-8.19.4"
+            ],
+            "releasever": null,
+            "security": false,
+            "skip_broken": false,
+            "state": "present",
+            "update_cache": false,
+            "update_only": false,
+            "use_backend": "auto",
+            "validate_certs": true
+        }
+    },
+    "msg": "Error accessing repos: File contains no section headers.\nfile: file:///etc/yum.repos.d/CentOS-7-Extras.repo, line: 1\n'-7-Extras]\\n'"
+}
+
+PLAY RECAP *********************************************************************
+ts01-11rl42                : ok=17   changed=0    unreachable=0    failed=1    skipped=15   rescued=0    ignored=1   
+
+'report' save json report to report.json
+'report' save report file '/tmp/report.json'
+JSON Report generated in report.json
+'report' render html template
+'report' save report file '/tmp/report.html'
+'report' save html report to report.json
+HTML Report generated in report.html
+Playbook run took 0 days, 0 hours, 2 minutes, 15 seconds
+Execute: Wait 40s ...
+Execute: python3 host_validation/check_host_list.py
+
+
+------------------HOST VALIDATION START------------------
+Getting elastic "onprem_provisioning/elastic_agents/install_verification" API key from Secret Manager in us-east-2 from account 469620122115.
+Getting ansible inventory list for METRICBEAT... 
+Issue with host_file.txt - [Errno 2] No such file or directory: './metricbeat_hosts.txt'
+AWS creds will expire at: 2026-02-12T19:38:45Z
+Upload report to s3 bucket 'hedgeserv-shd-lz-us-east-2-s3-artifacts'
+Completed 42.6 KiB/42.6 KiB (405.9 KiB/s) with 1 file(s) remaining
+upload: ../../../../tmp/report.json to s3://hedgeserv-shd-lz-us-east-2-s3-artifacts//report.json
+Completed 101.7 KiB/101.7 KiB (1.1 MiB/s) with 1 file(s) remaining
+upload: ../../../../tmp/report.html to s3://hedgeserv-shd-lz-us-east-2-s3-artifacts//report.html
+https://s3.console.aws.amazon.com/s3/buckets/hedgeserv-shd-lz-us-east-2-s3-artifacts?region=us-east-2&prefix=/&showversions=false
+
+[Container] 2026/02/12 18:43:17.416451 Phase complete: BUILD State: SUCCEEDED
+[Container] 2026/02/12 18:43:17.416481 Phase context status code:  Message: 
+[Container] 2026/02/12 18:43:17.505064 Entering phase POST_BUILD
+[Container] 2026/02/12 18:43:17.505787 Running command echo "Ansible execution completed on `date`"
+Ansible execution completed on Thu Feb 12 18:43:17 UTC 2026
+
+[Container] 2026/02/12 18:43:17.513935 Phase complete: POST_BUILD State: SUCCEEDED
+[Container] 2026/02/12 18:43:17.513950 Phase context status code:  Message: 
+[Container] 2026/02/12 18:43:17.564090 Set report auto-discover timeout to 5 seconds
+[Container] 2026/02/12 18:43:17.564129 Expanding base directory path:  .
+[Container] 2026/02/12 18:43:17.566445 Assembling file list
+[Container] 2026/02/12 18:43:17.566450 Expanding .
+[Container] 2026/02/12 18:43:17.568756 Expanding file paths for base directory .
+[Container] 2026/02/12 18:43:17.568763 Assembling file list
+[Container] 2026/02/12 18:43:17.568764 Expanding **/*
+[Container] 2026/02/12 18:43:17.571611 No matching auto-discover report paths found
+[Container] 2026/02/12 18:43:17.571629 Report auto-discover file discovery took 0.007539 seconds
+[Container] 2026/02/12 18:43:17.571639 Phase complete: UPLOAD_ARTIFACTS State: SUCCEEDED
+[Container] 2026/02/12 18:43:17.571643 Phase context status code:  Message: 
